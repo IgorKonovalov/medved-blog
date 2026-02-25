@@ -1,0 +1,57 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  slug: string;
+}
+
+const { title, description, slug } = Astro.props;
+---
+
+<article class="service-card">
+  <div class="service-card__image" aria-hidden="true"></div>
+  <h3 class="service-card__title">
+    <a href={`/uslugi/${slug}/`}>{title}</a>
+  </h3>
+  <p class="service-card__desc">{description}</p>
+</article>
+
+<style>
+  .service-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background-color: var(--color-bg);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s;
+  }
+
+  .service-card:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .service-card__image {
+    height: 10rem;
+    background-color: var(--color-bg-alt);
+  }
+
+  .service-card__title {
+    padding: var(--space-md) var(--space-md) 0;
+    font-size: var(--font-size-lg);
+  }
+
+  .service-card__title a {
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .service-card__title a:hover {
+    color: var(--color-primary);
+  }
+
+  .service-card__desc {
+    padding: var(--space-sm) var(--space-md) var(--space-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+</style>

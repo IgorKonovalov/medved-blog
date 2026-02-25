@@ -1,7 +1,245 @@
 ---
+import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+
+const services = (await getCollection('services'))
+  .filter((s) => !s.data.draft)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+
+const testimonials = (await getCollection('testimonials'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const renderedTestimonials = await Promise.all(
+  testimonials.map(async (t) => {
+    const { Content } = await render(t);
+    return { ...t, Content };
+  })
+);
+
+const phone = '+7 (812) 000-00-00';
+const phoneHref = 'tel:+78120000000';
+const whatsappHref = 'https://wa.me/78120000000';
+const telegramHref = 'https://t.me/medved_electrik';
 ---
 
 <BaseLayout title="Медведь — автоэлектрик BMW в Санкт-Петербурге">
-  <h1>Медведь — автоэлектрик BMW в Санкт-Петербурге</h1>
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Автоэлектрик BMW<br />в Санкт-Петербурге</h1>
+      <p class="hero-subtitle">Диагностика и ремонт электрооборудования BMW всех серий. Дилерское оборудование, опытные мастера.</p>
+      <a href="/kontakty/" class="hero-cta">Заказать звонок</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Наши услуги</h2>
+    <div class="services-grid">
+      {services.map((service) => (
+        <ServiceCard
+          title={service.data.title}
+          description={service.data.description}
+          slug={service.id}
+        />
+      ))}
+    </div>
+    <p class="section-more"><a href="/uslugi/">Все услуги &rarr;</a></p>
+  </section>
+
+  <section class="section section--alt">
+    <h2 class="section-title">Отзывы клиентов</h2>
+    <div class="testimonials-grid">
+      {renderedTestimonials.map(({ data, Content }) => (
+        <TestimonialCard
+          author={data.author}
+          car={data.car}
+          rating={data.rating}
+          body=""
+        >
+          <Content />
+        </TestimonialCard>
+      ))}
+    </div>
+    <p class="section-more"><a href="/otzyvy/">Все отзывы &rarr;</a></p>
+  </section>
+
+  <section class="section cta-section">
+    <h2 class="section-title">Свяжитесь с нами</h2>
+    <p>Позвоните или напишите — проконсультируем и запишем на удобное время.</p>
+    <div class="cta-links">
+      <a href={phoneHref} class="cta-btn">{phone}</a>
+      <a href={whatsappHref} target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn--wa">WhatsApp</a>
+      <a href={telegramHref} target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn--tg">Telegram</a>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .hero {
+    background-color: var(--color-primary);
+    color: #fff;
+    padding: var(--space-3xl) var(--space-md);
+  }
+
+  .hero-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .hero h1 {
+    color: #fff;
+    font-size: var(--font-size-3xl);
+  }
+
+  @media (min-width: 768px) {
+    .hero h1 {
+      font-size: var(--font-size-4xl);
+    }
+  }
+
+  .hero-subtitle {
+    margin-top: var(--space-md);
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+    max-width: 36rem;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    margin-top: var(--space-xl);
+    padding: var(--space-sm) var(--space-xl);
+    background-color: #fff;
+    color: var(--color-primary);
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: var(--radius);
+    min-height: 2.75rem;
+    line-height: 2.75rem;
+  }
+
+  .hero-cta:hover {
+    background-color: var(--color-bg-alt);
+    color: var(--color-primary-dark);
+  }
+
+  .section {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-3xl) var(--space-md);
+  }
+
+  .section--alt {
+    background-color: var(--color-bg-alt);
+    max-width: 100%;
+  }
+
+  .section--alt > .section-title,
+  .section--alt > .testimonials-grid,
+  .section--alt > .section-more {
+    max-width: var(--max-width);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-title {
+    margin-bottom: var(--space-xl);
+  }
+
+  .services-grid {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 640px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .testimonials-grid {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 768px) {
+    .testimonials-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .testimonials-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .section-more {
+    margin-top: var(--space-lg);
+    text-align: center;
+  }
+
+  .section-more a {
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .cta-section {
+    text-align: center;
+  }
+
+  .cta-section p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+  }
+
+  .cta-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-md);
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: var(--space-sm) var(--space-xl);
+    background-color: var(--color-primary);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: var(--radius);
+    min-height: 2.75rem;
+    line-height: 2.75rem;
+  }
+
+  .cta-btn:hover {
+    background-color: var(--color-primary-dark);
+    color: #fff;
+  }
+
+  .cta-btn--wa {
+    background-color: #25d366;
+  }
+
+  .cta-btn--wa:hover {
+    background-color: #1fb855;
+    color: #fff;
+  }
+
+  .cta-btn--tg {
+    background-color: #0088cc;
+  }
+
+  .cta-btn--tg:hover {
+    background-color: #006da3;
+    color: #fff;
+  }
+</style>

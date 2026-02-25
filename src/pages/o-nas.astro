@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="О нас — автоэлектрик BMW" description="Опытный автоэлектрик BMW в Санкт-Петербурге. Специализация на электрооборудовании BMW всех серий.">
+  <section class="about-page">
+    <h1>О нас</h1>
+
+    <div class="prose">
+      <p>Мы специализируемся на диагностике и ремонте электрооборудования автомобилей BMW всех серий. Работаем в Санкт-Петербурге и обслуживаем клиентов из всех районов города.</p>
+
+      <h2>Опыт и специализация</h2>
+      <p>Многолетний опыт работы с электрикой BMW позволяет нам быстро находить и устранять даже самые сложные неисправности. Используем дилерское диагностическое оборудование.</p>
+
+      <h2>Сертификаты</h2>
+      <ul>
+        <li>Диагностика электрооборудования BMW</li>
+        <li>Кодирование и программирование блоков BMW</li>
+        <li>Ремонт электропроводки</li>
+      </ul>
+
+      <div class="photo-placeholder" aria-hidden="true">
+        <span>Фото мастерской</span>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-page {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--space-2xl) var(--space-md);
+  }
+
+  .about-page h1 {
+    margin-bottom: var(--space-xl);
+  }
+
+  .photo-placeholder {
+    margin-top: var(--space-xl);
+    height: 16rem;
+    background-color: var(--color-bg-alt);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+</style>

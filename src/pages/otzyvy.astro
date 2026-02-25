@@ -1,0 +1,50 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+
+const testimonials = (await getCollection('testimonials'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const rendered = await Promise.all(
+  testimonials.map(async (t) => {
+    const { Content } = await render(t);
+    return { ...t, Content };
+  })
+);
+---
+
+<BaseLayout title="Отзывы — автоэлектрик BMW" description="Отзывы клиентов об услугах автоэлектрика BMW в Санкт-Петербурге.">
+  <section class="testimonials-page">
+    <h1>Отзывы клиентов</h1>
+    <div class="testimonials-list">
+      {rendered.map(({ data, Content }) => (
+        <TestimonialCard
+          author={data.author}
+          car={data.car}
+          rating={data.rating}
+          body=""
+        >
+          <Content />
+        </TestimonialCard>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .testimonials-page {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--space-2xl) var(--space-md);
+  }
+
+  .testimonials-page h1 {
+    margin-bottom: var(--space-xl);
+  }
+
+  .testimonials-list {
+    display: grid;
+    gap: var(--space-lg);
+  }
+</style>

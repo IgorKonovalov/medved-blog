@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+
+const services = (await getCollection('services'))
+  .filter((s) => !s.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Услуги — автоэлектрик BMW" description="Услуги автоэлектрика BMW в Санкт-Петербурге: диагностика, ремонт проводки, ремонт генератора и другие работы.">
+  <section class="services-page">
+    <h1>Наши услуги</h1>
+    <div class="services-grid">
+      {services.map((service) => (
+        <ServiceCard
+          title={service.data.title}
+          description={service.data.description}
+          slug={service.id}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .services-page {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-2xl) var(--space-md);
+  }
+
+  .services-page h1 {
+    margin-bottom: var(--space-xl);
+  }
+
+  .services-grid {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 640px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

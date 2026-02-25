@@ -1,0 +1,92 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  tags: string[];
+}
+
+const { title, description, date, tags } = Astro.props;
+const formattedDate = date.toLocaleDateString('ru-RU', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={`${title} — блог автоэлектрика BMW`} description={description}>
+  <article class="blog-post">
+    <header class="post-header">
+      <h1>{title}</h1>
+      <div class="post-meta">
+        <time datetime={date.toISOString().split('T')[0]}>{formattedDate}</time>
+        {tags.length > 0 && (
+          <ul class="post-tags">
+            {tags.map((tag) => (
+              <li>{tag}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </header>
+
+    <div class="prose">
+      <slot />
+    </div>
+
+    <footer class="post-footer">
+      <a href="/blog/">&larr; Все статьи</a>
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .blog-post {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--space-2xl) var(--space-md);
+  }
+
+  .post-header {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .post-header h1 {
+    margin-bottom: var(--space-md);
+  }
+
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-md);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  .post-tags {
+    display: flex;
+    gap: var(--space-sm);
+    list-style: none;
+  }
+
+  .post-tags li {
+    padding: var(--space-xs) var(--space-sm);
+    background-color: var(--color-bg-alt);
+    border-radius: var(--radius);
+    font-size: var(--font-size-xs);
+  }
+
+  .post-footer {
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .post-footer a {
+    text-decoration: none;
+    font-weight: 600;
+  }
+</style>

@@ -1,0 +1,65 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout title={`${title} — автоэлектрик BMW`} description={description}>
+  <article class="service-detail">
+    <h1>{title}</h1>
+    <div class="prose">
+      <slot />
+    </div>
+    <div class="service-cta">
+      <p>Нужна помощь с электрикой BMW?</p>
+      <a href="/kontakty/" class="cta-button">Заказать звонок</a>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .service-detail {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--space-2xl) var(--space-md);
+  }
+
+  .service-detail h1 {
+    margin-bottom: var(--space-xl);
+  }
+
+  .service-cta {
+    margin-top: var(--space-3xl);
+    padding: var(--space-xl);
+    background-color: var(--color-primary-light);
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+
+  .service-cta p {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-md);
+  }
+
+  .cta-button {
+    display: inline-block;
+    padding: var(--space-sm) var(--space-xl);
+    background-color: var(--color-primary);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: var(--radius);
+    min-height: 2.75rem;
+    line-height: 2.75rem;
+  }
+
+  .cta-button:hover {
+    background-color: var(--color-primary-dark);
+    color: #fff;
+  }
+</style>

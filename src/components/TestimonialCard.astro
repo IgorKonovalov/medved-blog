@@ -1,0 +1,58 @@
+---
+interface Props {
+  author: string;
+  car: string;
+  rating: number;
+  body: string;
+}
+
+const { author, car, rating, body } = Astro.props;
+const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+---
+
+<article class="testimonial-card">
+  <div class="testimonial-card__stars" aria-label={`Оценка: ${rating} из 5`}>{stars}</div>
+  <blockquote class="testimonial-card__text">{body}</blockquote>
+  <footer class="testimonial-card__author">
+    <strong>{author}</strong>
+    <span>{car}</span>
+  </footer>
+</article>
+
+<style>
+  .testimonial-card {
+    padding: var(--space-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg);
+  }
+
+  .testimonial-card__stars {
+    color: var(--color-star);
+    font-size: var(--font-size-lg);
+    letter-spacing: 0.1em;
+  }
+
+  .testimonial-card__text {
+    margin-top: var(--space-sm);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+  }
+
+  .testimonial-card__author {
+    margin-top: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .testimonial-card__author strong {
+    font-size: var(--font-size-sm);
+  }
+
+  .testimonial-card__author span {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+  }
+</style>

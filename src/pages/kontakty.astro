@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const phone = '+7 (812) 000-00-00';
+const phoneHref = 'tel:+78120000000';
+const whatsappHref = 'https://wa.me/78120000000';
+const telegramHref = 'https://t.me/medved_electrik';
+---
+
+<BaseLayout title="Контакты — автоэлектрик BMW" description="Свяжитесь с автоэлектриком BMW в Санкт-Петербурге. Телефон, WhatsApp, Telegram. Адрес мастерской.">
+  <section class="contact-page">
+    <h1>Контакты</h1>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h2>Телефон</h2>
+        <a href={phoneHref} class="contact-phone">{phone}</a>
+
+        <h2>Мессенджеры</h2>
+        <div class="messenger-links">
+          <a href={whatsappHref} target="_blank" rel="noopener noreferrer" class="messenger-link messenger-link--wa">WhatsApp</a>
+          <a href={telegramHref} target="_blank" rel="noopener noreferrer" class="messenger-link messenger-link--tg">Telegram</a>
+        </div>
+
+        <h2>Адрес</h2>
+        <address>
+          <p>Санкт-Петербург</p>
+          <p>Адрес уточняется</p>
+        </address>
+
+        <h2>Режим работы</h2>
+        <p>Пн–Сб: 10:00–20:00</p>
+        <p>Вс: выходной</p>
+      </div>
+
+      <div class="map-placeholder" aria-hidden="true">
+        <span>Карта</span>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-page {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--space-2xl) var(--space-md);
+  }
+
+  .contact-page h1 {
+    margin-bottom: var(--space-xl);
+  }
+
+  .contact-grid {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .contact-info h2 {
+    font-size: var(--font-size-lg);
+    margin-top: var(--space-lg);
+  }
+
+  .contact-info h2:first-child {
+    margin-top: 0;
+  }
+
+  .contact-phone {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .messenger-links {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+  }
+
+  .messenger-link {
+    display: inline-block;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+  }
+
+  .messenger-link--wa {
+    background-color: #25d366;
+  }
+
+  .messenger-link--wa:hover {
+    background-color: #1fb855;
+    color: #fff;
+  }
+
+  .messenger-link--tg {
+    background-color: #0088cc;
+  }
+
+  .messenger-link--tg:hover {
+    background-color: #006da3;
+    color: #fff;
+  }
+
+  address {
+    font-style: normal;
+    color: var(--color-text-muted);
+    margin-top: var(--space-sm);
+  }
+
+  .contact-info > p {
+    color: var(--color-text-muted);
+    margin-top: var(--space-sm);
+  }
+
+  .map-placeholder {
+    min-height: 16rem;
+    background-color: var(--color-bg-alt);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+</style>
