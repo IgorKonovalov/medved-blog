@@ -11,6 +11,7 @@
 | CI/CD | Cloudflare Pages built-in | GitHub Actions |
 | Package Manager | npm | pnpm |
 | Form Backend | Cloudflare Workers → Telegram Bot | Email via Resend |
+| Telegram Bot | Cloudflare Workers (webhook) + grammY | Railway / VPS |
 
 ## Requirements
 
@@ -167,6 +168,27 @@ const testimonials = defineCollection({
 **Trade-offs**: Slightly slower installs and more disk usage than pnpm. No strict dependency isolation (phantom dependencies are theoretically possible but unlikely at this project's scale).
 
 **See also**: [ADR-001](adr/001-switch-pnpm-to-npm.md) for the migration rationale.
+
+### Interactive Telegram Bot: Cloudflare Workers + grammY
+
+**Why**: An interactive Telegram bot lets potential clients request callbacks, browse services, and get contact info directly in Telegram — an additional lead capture channel. Hosting it on Cloudflare Workers (webhook mode) keeps the entire stack on one platform with zero additional cost.
+
+**How it works**:
+1. Bot is registered with Telegram via @BotFather
+2. Telegram webhook points to a Cloudflare Worker URL
+3. When a user messages the bot, Telegram POSTs the update to the Worker
+4. grammY framework processes the update, manages session state via Cloudflare KV
+5. Bot replies via Telegram Bot API
+
+**Tech stack**:
+- **grammY** framework with `webhookCallback(bot, "cloudflare-mod")` adapter
+- **Cloudflare KV** for session state (which step the user is on in a conversation flow)
+- **npm workspaces** monorepo: bot lives in `packages/bot/` with its own `wrangler.toml`
+- Deployed independently from the site via `wrangler deploy`
+
+**Trade-offs**: Workers have 10ms CPU time on free tier (sufficient for this use case). Stateless execution means conversation state must be persisted to KV on every message. Local development requires `wrangler dev` + a test bot.
+
+**See also**: [ADR-002](adr/002-telegram-bot-on-cloudflare-workers.md) for the full decision record.
 
 ## Site Structure (Pages)
 
