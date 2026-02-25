@@ -10,7 +10,7 @@ Use this checklist when reviewing code or creating implementation plans. Not eve
 - [ ] **No layout shifts** — images have explicit `width` and `height`; fonts use `font-display: swap`
 - [ ] **Critical CSS** — Astro scopes styles by default; no large global CSS imports
 - [ ] **Lazy loading** — below-fold images use `loading="lazy"`; above-fold images do NOT
-- [ ] **No unnecessary dependencies** — each `pnpm add` must be justified; prefer built-in Astro features over third-party packages
+- [ ] **No unnecessary dependencies** — each `npm install <pkg>` must be justified; prefer built-in Astro features over third-party packages
 
 ## SEO
 

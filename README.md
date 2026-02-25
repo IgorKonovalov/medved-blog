@@ -12,16 +12,16 @@ Service website and blog for a BMW auto electrician based in Saint Petersburg. B
 | CMS | Tina CMS (visual editing for non-technical writers) |
 | Hosting | Cloudflare Pages |
 | Forms | Cloudflare Workers → Telegram Bot |
-| Package Manager | pnpm |
+| Package Manager | npm (built into Node.js) |
 
 ## Getting Started
 
 ```bash
-pnpm install
-pnpm dev        # Start dev server at http://localhost:4321
-pnpm build      # Production build to dist/
-pnpm preview    # Preview production build locally
-pnpm check      # TypeScript and Astro validation
+npm install
+npm run dev        # Start dev server at http://localhost:4321
+npm run build      # Production build to dist/
+npm run preview    # Preview production build locally
+npm run check      # TypeScript and Astro validation
 ```
 
 ## Project Structure

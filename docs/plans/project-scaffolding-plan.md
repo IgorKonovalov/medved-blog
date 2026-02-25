@@ -5,7 +5,7 @@
 
 ## Overview
 
-Scaffold the medved-blog Astro project from an empty repo to a running site skeleton with all Content Collections configured, core layout components in place, global styles established, and a placeholder page for every route in the site map. At the end of this plan, `pnpm dev` serves a navigable site with real structure and dummy content — ready for feature work to fill in.
+Scaffold the medved-blog Astro project from an empty repo to a running site skeleton with all Content Collections configured, core layout components in place, global styles established, and a placeholder page for every route in the site map. At the end of this plan, `npm run dev` serves a navigable site with real structure and dummy content — ready for feature work to fill in.
 
 ## Phases
 
@@ -23,13 +23,13 @@ This plan is split into 5 phases. Each phase ends with a manual testing checkpoi
 
 ## Phase 1: Project Initialization
 
-> **Goal**: Astro project created, TypeScript strict, pnpm, dev server runs.
+> **Goal**: Astro project created, TypeScript strict, npm, dev server runs.
 
 ### New files to create
 
 | File | Purpose |
 |---|---|
-| `package.json` | Project manifest (created by `pnpm create astro`) |
+| `package.json` | Project manifest (created by `npm create astro`) |
 | `astro.config.mjs` | Astro configuration with sitemap integration |
 | `tsconfig.json` | Extends `astro/tsconfigs/strict` |
 | `.gitignore` | Updated with Astro/node ignores alongside existing Claude ignores |
@@ -39,16 +39,16 @@ This plan is split into 5 phases. Each phase ends with a manual testing checkpoi
 ### Step 1.1: Scaffold Astro project
 
 - **Complexity**: S
-- **What**: Run `pnpm create astro@latest` with the minimal (empty) template, TypeScript strict mode. This generates `package.json`, `astro.config.mjs`, `tsconfig.json`, `src/env.d.ts`, and a starter `src/pages/index.astro`.
+- **What**: Run `npm create astro@latest` with the minimal (empty) template, TypeScript strict mode. This generates `package.json`, `astro.config.mjs`, `tsconfig.json`, `src/env.d.ts`, and a starter `src/pages/index.astro`.
 - **Important**: The scaffolder will try to create in a subdirectory — we need it to scaffold in the current repo root. Use `.` as the target directory. If the scaffolder conflicts with existing files (docs, .claude), resolve by keeping our existing files.
-- **Acceptance**: `pnpm install` completes without errors.
+- **Acceptance**: `npm install` completes without errors.
 
 ### Step 1.2: Configure TypeScript strict
 
 - **Complexity**: S
 - **Files**: `tsconfig.json`
 - **What**: Ensure `tsconfig.json` extends `astro/tsconfigs/strict`. The scaffolder usually sets this if you choose "strict" during setup. Verify it's correct.
-- **Acceptance**: `pnpm astro check` runs with no errors.
+- **Acceptance**: `npx astro check` runs with no errors.
 
 ### Step 1.3: Add Astro integrations
 
@@ -57,7 +57,7 @@ This plan is split into 5 phases. Each phase ends with a manual testing checkpoi
 - **What**: Install and configure essential Astro integrations:
   - `@astrojs/sitemap` — sitemap generation
   - `@astrojs/cloudflare` — Cloudflare Pages adapter (needed for the Worker form handler later; even though the site is mostly static, the adapter enables `hybrid` mode for select server routes)
-- **Command**: `pnpm astro add sitemap cloudflare`
+- **Command**: `npx astro add sitemap cloudflare`
 - **Note**: Set `output: 'static'` for now. We'll switch to `hybrid` in a later plan when adding the callback form Worker.
 - **Acceptance**: Both integrations listed in `astro.config.mjs`.
 
@@ -101,12 +101,12 @@ This plan is split into 5 phases. Each phase ends with a manual testing checkpoi
 ### Manual Testing — Phase 1
 
 ```
-1. Run `pnpm dev`
+1. Run `npm run dev`
 2. Open http://localhost:4321 in browser
 3. Verify: Astro welcome page or blank page loads without errors
 4. Check terminal: no TypeScript errors, no warnings
-5. Run `pnpm build` — verify it completes and produces `dist/` directory
-6. Run `pnpm astro check` — verify zero errors
+5. Run `npm run build` — verify it completes and produces `dist/` directory
+6. Run `npx astro check` — verify zero errors
 ```
 
 ---
@@ -171,38 +171,38 @@ This plan is split into 5 phases. Each phase ends with a manual testing checkpoi
     }),
   });
   ```
-- **Acceptance**: `pnpm astro check` passes with collections recognized.
+- **Acceptance**: `npx astro check` passes with collections recognized.
 
 ### Step 2.2: Create seed service content
 
 - **Complexity**: S
 - **Files**: `src/content/services/diagnostika-elektriki/index.md`
 - **What**: Create a single seed service page with valid frontmatter matching the schema. Content can be 2-3 placeholder sentences in Russian. This validates the schema works at build time.
-- **Acceptance**: `pnpm build` completes — Astro validates the frontmatter against the Zod schema during build.
+- **Acceptance**: `npm run build` completes — Astro validates the frontmatter against the Zod schema during build.
 
 ### Step 2.3: Create seed blog post
 
 - **Complexity**: S
 - **Files**: `src/content/blog/primer-stati/index.md`
 - **What**: Create a single seed blog post with valid frontmatter (title, date, description, tags). 2-3 placeholder paragraphs in Russian.
-- **Acceptance**: `pnpm build` completes without schema validation errors.
+- **Acceptance**: `npm run build` completes without schema validation errors.
 
 ### Step 2.4: Create seed testimonial
 
 - **Complexity**: S
 - **Files**: `src/content/testimonials/ivan-petrov.md`
 - **What**: Create a single seed testimonial with valid frontmatter (author, car, date, rating). 1-2 sentences of review text in Russian.
-- **Acceptance**: `pnpm build` completes without schema validation errors.
+- **Acceptance**: `npm run build` completes without schema validation errors.
 
 ### Manual Testing — Phase 2
 
 ```
-1. Run `pnpm build`
+1. Run `npm run build`
 2. Verify: build completes with no content validation errors
 3. Intentionally break a frontmatter field (e.g., remove required `title`)
-4. Run `pnpm build` again — verify Zod schema error is reported clearly
+4. Run `npm run build` again — verify Zod schema error is reported clearly
 5. Revert the intentional break
-6. Run `pnpm astro check` — zero errors
+6. Run `npx astro check` — zero errors
 ```
 
 ---
@@ -295,12 +295,12 @@ This plan is split into 5 phases. Each phase ends with a manual testing checkpoi
 - **Complexity**: S
 - **Files**: `src/pages/index.astro`
 - **What**: Replace the scaffolded starter page with a minimal homepage that uses `BaseLayout`. Content is a single `<h1>` placeholder — the real homepage is a later feature.
-- **Acceptance**: `pnpm dev` shows the page with header, footer, and mobile bar.
+- **Acceptance**: `npm run dev` shows the page with header, footer, and mobile bar.
 
 ### Manual Testing — Phase 3
 
 ```
-1. Run `pnpm dev`, open http://localhost:4321
+1. Run `npm run dev`, open http://localhost:4321
 2. Desktop (≥1024px):
    - Header visible with logo, phone number, messenger links, nav
    - Footer visible with contact info and nav
@@ -319,7 +319,7 @@ This plan is split into 5 phases. Each phase ends with a manual testing checkpoi
 5. View page source:
    - Verify NO <script> tags in the output (zero JS)
    - Verify <meta> tags present (title, description, viewport, charset)
-6. Run `pnpm build` — verify clean build
+6. Run `npm run build` — verify clean build
 ```
 
 ---
@@ -437,7 +437,7 @@ This plan is split into 5 phases. Each phase ends with a manual testing checkpoi
 ### Manual Testing — Phase 4
 
 ```
-1. Run `pnpm dev`, open http://localhost:4321
+1. Run `npm run dev`, open http://localhost:4321
 2. Navigation — click every link in the header:
    - / → Homepage with hero, services, testimonials, CTA sections
    - /uslugi/ → Services index listing seed service
@@ -457,10 +457,10 @@ This plan is split into 5 phases. Each phase ends with a manual testing checkpoi
    - <h1> for the title (only one per page)
    - Headings in content start at <h2>
 6. Verify blog post date displays in Russian format (e.g., "25 февраля 2026")
-7. Run `pnpm build`:
+7. Run `npm run build`:
    - Clean build
    - Check dist/ — verify HTML files exist for all routes including dynamic ones
-8. Run `pnpm astro check` — zero errors
+8. Run `npx astro check` — zero errors
 ```
 
 ---
@@ -492,7 +492,7 @@ This plan is split into 5 phases. Each phase ends with a manual testing checkpoi
   - Set `site` to a placeholder URL (e.g., `https://example.com`) — required for sitemap generation. Will be updated when domain is chosen.
   - Set `trailingSlash: 'always'` — matches the URL structure in our architecture (all URLs end with `/`).
   - Verify sitemap integration is configured.
-- **Acceptance**: `pnpm build` generates `sitemap-index.xml` in `dist/`.
+- **Acceptance**: `npm run build` generates `sitemap-index.xml` in `dist/`.
 
 ### Step 5.2: Environment variables documentation
 
@@ -523,7 +523,7 @@ This plan is split into 5 phases. Each phase ends with a manual testing checkpoi
 ### Step 5.4: Cloudflare Pages compatibility check
 
 - **Complexity**: S
-- **What**: Run `pnpm build` and verify the output:
+- **What**: Run `npm run build` and verify the output:
   - `dist/` contains static HTML files for all routes
   - No server-side dependencies in the output (we're using `output: 'static'`)
   - Total `dist/` size is well under Cloudflare's 25MB per-file limit
@@ -540,15 +540,15 @@ This plan is split into 5 phases. Each phase ends with a manual testing checkpoi
 ### Manual Testing — Phase 5
 
 ```
-1. Run `pnpm build` — clean build, no warnings
-2. Run `pnpm preview` — open http://localhost:4321
+1. Run `npm run build` — clean build, no warnings
+2. Run `npm run preview` — open http://localhost:4321
    - All routes work (same checks as Phase 4 but on the built output)
    - View source: HTML is production-quality (minified, no dev artifacts)
 3. Check dist/ directory:
    - Verify: index.html, uslugi/index.html, blog/index.html, etc.
    - Verify: sitemap-index.xml exists and contains all URLs
    - Verify: no JavaScript bundles (zero JS baseline)
-4. Run `pnpm check` — zero TypeScript errors
+4. Run `npm run check` — zero TypeScript errors
 5. Verify .env.example exists and documents all future env vars
 ```
 

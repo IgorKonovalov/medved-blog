@@ -9,7 +9,7 @@
 | CMS | Tina CMS | Decap CMS |
 | Hosting | Cloudflare Pages | Vercel |
 | CI/CD | Cloudflare Pages built-in | GitHub Actions |
-| Package Manager | pnpm | npm |
+| Package Manager | npm | pnpm |
 | Form Backend | Cloudflare Workers → Telegram Bot | Email via Resend |
 
 ## Requirements
@@ -153,16 +153,20 @@ const testimonials = defineCollection({
 
 **Pipeline stages**:
 1. Push to GitHub triggers Cloudflare Pages webhook
-2. Cloudflare installs dependencies (`pnpm install`)
-3. Runs Astro build (`pnpm build`)
+2. Cloudflare installs dependencies (`npm install`)
+3. Runs Astro build (`npm run build`)
 4. Deploys to Cloudflare's edge CDN globally
 5. Preview URL generated for PRs
 
 **Estimated build time**: Under 30 seconds for a small Astro site.
 
-### Package Manager: pnpm
+### Package Manager: npm
 
-**Why**: pnpm is the fastest package manager with the lowest disk usage thanks to its content-addressable store. It enforces strict dependency resolution, catching phantom dependency issues early. Well-supported by Cloudflare Pages out of the box.
+**Why**: npm ships with Node.js — zero additional tooling required. Every CI/CD environment, including Cloudflare Pages, supports it out of the box with no extra configuration. For a small Astro site with few dependencies, the performance difference vs pnpm is negligible. Keeping the build as close to barebone Node.js as possible reduces moving parts and lowers the barrier for contributors.
+
+**Trade-offs**: Slightly slower installs and more disk usage than pnpm. No strict dependency isolation (phantom dependencies are theoretically possible but unlikely at this project's scale).
+
+**See also**: [ADR-001](adr/001-switch-pnpm-to-npm.md) for the migration rationale.
 
 ## Site Structure (Pages)
 
@@ -191,13 +195,13 @@ const testimonials = defineCollection({
 
 ## Next Steps
 
-1. Scaffold the Astro project: `pnpm create astro@latest`
+1. Scaffold the Astro project: `npm create astro@latest`
 2. Set up Content Collections for services, blog, and testimonials
 3. Build core layout: header with phone/messenger CTAs, footer, mobile sticky bar
 4. Create homepage with hero, services overview, testimonials section
 5. Build service page template and populate initial service pages
 6. Build blog index and post template
-7. Set up Tina CMS: `pnpm add tinacms` and configure `tina/config.ts`
+7. Set up Tina CMS: `npm install tinacms` and configure `tina/config.ts`
 8. Create Cloudflare Worker for callback form → Telegram bot
 9. Connect GitHub repo to Cloudflare Pages for automatic deployments
 10. Configure custom domain when ready

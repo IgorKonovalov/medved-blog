@@ -8,7 +8,7 @@ medved-blog is a service website + blog for a BMW auto electrician in Saint Pete
 
 - **Astro** (static site generator, zero JS by default)
 - **TypeScript** (strict mode, extends `astro/tsconfigs/strict`)
-- **pnpm** (package manager)
+- **npm** (package manager — ships with Node.js)
 - **Cloudflare Pages** (hosting + Workers for form backend)
 - **Tina CMS** (visual editing, git-based)
 
@@ -22,10 +22,10 @@ medved-blog is a service website + blog for a BMW auto electrician in Saint Pete
 ## Commands
 
 ```
-pnpm dev        # Dev server
-pnpm build      # Production build
-pnpm preview    # Preview built site
-pnpm check      # TypeScript + Astro validation
+npm run dev        # Dev server
+npm run build      # Production build
+npm run preview    # Preview built site
+npm run check      # TypeScript + Astro validation
 ```
 
 ## Project Conventions
