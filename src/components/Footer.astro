@@ -1,0 +1,121 @@
+---
+const currentYear = new Date().getFullYear();
+
+const navLinks = [
+  { href: '/', label: 'Главная' },
+  { href: '/uslugi/', label: 'Услуги' },
+  { href: '/blog/', label: 'Блог' },
+  { href: '/otzyvy/', label: 'Отзывы' },
+  { href: '/o-nas/', label: 'О нас' },
+  { href: '/kontakty/', label: 'Контакты' },
+];
+
+const phone = '+7 (812) 000-00-00';
+const phoneHref = 'tel:+78120000000';
+---
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-contacts">
+      <p class="footer-brand">Медведь — автоэлектрик BMW</p>
+      <a href={phoneHref} class="footer-phone">{phone}</a>
+      <p>Санкт-Петербург</p>
+      <p>Пн–Сб: 10:00–20:00</p>
+    </div>
+
+    <nav aria-label="Навигация в подвале">
+      <ul class="footer-nav">
+        {navLinks.map(({ href, label }) => (
+          <li><a href={href}>{label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="footer-info">
+      <p>Обслуживаем все районы Санкт-Петербурга</p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; {currentYear} Медведь. Все права защищены.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-bg-alt);
+    margin-top: var(--space-3xl);
+    padding-bottom: var(--sticky-bar-height);
+  }
+
+  @media (min-width: 768px) {
+    .footer {
+      padding-bottom: 0;
+    }
+  }
+
+  .footer-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-2xl) var(--space-md);
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 768px) {
+    .footer-inner {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+
+  .footer-brand {
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+  }
+
+  .footer-phone {
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-primary);
+  }
+
+  .footer-contacts p {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  .footer-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .footer-nav a {
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    color: var(--color-text-muted);
+  }
+
+  .footer-nav a:hover {
+    color: var(--color-primary);
+  }
+
+  .footer-info p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .footer-bottom {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-md);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .footer-bottom p {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+  }
+</style>

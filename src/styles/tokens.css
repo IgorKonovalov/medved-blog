@@ -1,0 +1,57 @@
+:root {
+  /* Colors */
+  --color-primary: #1a56db;
+  --color-primary-dark: #1444b0;
+  --color-primary-light: #e8eefb;
+  --color-text: #1f2937;
+  --color-text-muted: #6b7280;
+  --color-bg: #ffffff;
+  --color-bg-alt: #f9fafb;
+  --color-border: #e5e7eb;
+  --color-accent: #dc2626;
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-star: #f59e0b;
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --line-height-tight: 1.25;
+  --line-height-base: 1.6;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  /* Layout */
+  --max-width: 72rem;
+  --content-width: 48rem;
+  --radius: 0.375rem;
+  --radius-lg: 0.5rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+
+  /* Breakpoints (reference only — can't use in media queries)
+     sm:  640px
+     md:  768px
+     lg: 1024px
+     xl: 1280px
+  */
+
+  /* Mobile sticky bar height */
+  --sticky-bar-height: 3.5rem;
+}
