@@ -1,1 +1,2 @@
-https://www.bmw-electric-spb.ru/* https://bmw-electric-spb.ru/:splat 301
+# www-to-apex redirect is handled by Cloudflare DNS settings, not _redirects
+# Cloudflare Pages _redirects only supports relative URLs
