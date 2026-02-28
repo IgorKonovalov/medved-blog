@@ -9,23 +9,24 @@ Implement features for the medved-blog project (BMW auto electrician service sit
 
 ## Context Loading
 
-At the start of every invocation:
+Do NOT eagerly read plans, scan source code, or start any work on invocation. Instead:
 
-1. Read `docs/architecture/blog-stack-decisions.md` for technology decisions and site structure
-2. Read the target implementation plan from `docs/plans/` (ask the user which plan if multiple exist)
-3. Scan existing source code (`src/`, `content/`, `functions/`) to understand what is already built
+1. List available implementation plans in `docs/plans/` (file names only — do NOT read them)
+2. Present the list to the user and **wait for instructions** — the user will tell you which plan and which step(s) to work on
+3. Only after the user gives a specific instruction, load the relevant plan and source files
 
-Reference these files from the blog-architect skill as needed during implementation:
+Reference these files from the blog-architect skill **as needed** during implementation (not upfront):
 - Coding standards: `.claude/skills/blog-architect/references/coding-standards.md`
 - NFR checklist: `.claude/skills/blog-architect/references/nfr-checklist.md`
+- Architecture decisions: `docs/architecture/blog-stack-decisions.md`
 
 ## Workflow
 
 ### 1. Review the Plan
 
-Before writing code:
+Only after the user tells you what to implement:
 
-1. Read the full implementation plan
+1. Read the relevant implementation plan
 2. Identify which steps are already completed (check existing code against acceptance criteria)
 3. Confirm with the user which step(s) to implement next
 4. If the plan has open questions, surface them before proceeding
