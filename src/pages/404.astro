@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Страница не найдена" noindex={true}>
+  <section class="not-found">
+    <h1>Страница не найдена</h1>
+    <p>Запрашиваемая страница не существует или была перемещена.</p>
+    <div class="not-found__links">
+      <a href="/">Перейти на главную</a>
+      <a href="/blog/">Читать блог</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--space-3xl) var(--space-md);
+    text-align: center;
+  }
+
+  .not-found h1 {
+    margin-bottom: var(--space-md);
+  }
+
+  .not-found p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xl);
+  }
+
+  .not-found__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-md);
+  }
+
+  .not-found__links a {
+    display: inline-block;
+    padding: var(--space-sm) var(--space-xl);
+    background-color: var(--color-primary);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: var(--radius);
+    min-height: 2.75rem;
+    line-height: 2.75rem;
+  }
+
+  .not-found__links a:hover {
+    background-color: var(--color-primary-dark);
+    color: #fff;
+  }
+</style>

@@ -1,0 +1,54 @@
+---
+interface Props {
+  tags: string[];
+  size?: 'sm' | 'md';
+}
+
+const { tags, size = 'md' } = Astro.props;
+---
+
+{tags.length > 0 && (
+  <ul class:list={['tag-list', `tag-list--${size}`]}>
+    {tags.map((tag) => (
+      <li>
+        <a href={`/blog/tag/${tag}/`}>{tag}</a>
+      </li>
+    ))}
+  </ul>
+)}
+
+<style>
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    list-style: none;
+  }
+
+  .tag-list a {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-sm);
+    background-color: var(--color-bg-alt);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--color-text);
+    transition: background-color 0.15s;
+    min-height: 2.75rem;
+    line-height: calc(2.75rem - 2 * var(--space-xs));
+  }
+
+  .tag-list a:hover {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-dark);
+  }
+
+  .tag-list--sm a {
+    font-size: var(--font-size-xs);
+    min-height: 2rem;
+    line-height: calc(2rem - 2 * var(--space-xs));
+  }
+
+  .tag-list--md a {
+    font-size: var(--font-size-sm);
+  }
+</style>

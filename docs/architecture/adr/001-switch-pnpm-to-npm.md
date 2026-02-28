@@ -1,6 +1,8 @@
 # ADR-001: Switch package manager from pnpm to npm
 
-## Status: accepted
+## Status: superseded
+
+> **Note**: The project has since switched from npm to yarn. This ADR documents the original pnpm → npm migration for historical context.
 
 ## Context
 

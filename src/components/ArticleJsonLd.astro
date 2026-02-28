@@ -1,0 +1,36 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  datePublished: string;
+  dateModified?: string;
+  url: string;
+  image?: string;
+}
+
+const { title, description, datePublished, dateModified, url, image } = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description,
+  datePublished,
+  ...(dateModified && { dateModified }),
+  author: {
+    '@type': 'Organization',
+    name: 'Медведь — автоэлектрик BMW',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Медведь — автоэлектрик BMW',
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': url,
+  },
+  ...(image && { image }),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

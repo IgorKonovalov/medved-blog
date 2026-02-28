@@ -4,12 +4,29 @@ import Footer from '../components/Footer.astro';
 import MobileStickyBar from '../components/MobileStickyBar.astro';
 import '../styles/global.css';
 
+interface ArticleMeta {
+  publishedTime: string;
+  modifiedTime?: string;
+  tags?: string[];
+}
+
 interface Props {
   title: string;
   description?: string;
+  ogType?: string;
+  ogImage?: string;
+  articleMeta?: ArticleMeta;
+  noindex?: boolean;
 }
 
-const { title, description = 'Автоэлектрик BMW в Санкт-Петербурге. Диагностика, ремонт электрики, кодирование.' } = Astro.props;
+const {
+  title,
+  description = 'Автоэлектрик BMW в Санкт-Петербурге. Диагностика, ремонт электрики, кодирование.',
+  ogType = 'website',
+  ogImage,
+  articleMeta,
+  noindex = false,
+} = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -20,16 +37,31 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonicalURL.href} />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL.href} />
     <meta property="og:locale" content="ru_RU" />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {articleMeta && (
+      <>
+        <meta property="article:published_time" content={articleMeta.publishedTime} />
+        {articleMeta.modifiedTime && (
+          <meta property="article:modified_time" content={articleMeta.modifiedTime} />
+        )}
+        {articleMeta.tags?.map((tag) => (
+          <meta property="article:tag" content={tag} />
+        ))}
+      </>
+    )}
 
+    <link rel="alternate" type="application/rss+xml" title="Блог — автоэлектрик BMW" href="/blog/rss.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <slot name="head" />
   </head>
   <body>
     <Header />

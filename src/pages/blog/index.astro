@@ -18,6 +18,9 @@ const posts = (await getCollection('blog'))
           date={post.data.date}
           description={post.data.description}
           slug={post.id}
+          image={post.data.image}
+          imageAlt={post.data.imageAlt}
+          tags={post.data.tags}
         />
       ))}
     </div>

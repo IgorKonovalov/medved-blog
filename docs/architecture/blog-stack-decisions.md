@@ -9,7 +9,7 @@
 | CMS | Tina CMS | Decap CMS |
 | Hosting | Cloudflare Pages | Vercel |
 | CI/CD | Cloudflare Pages built-in | GitHub Actions |
-| Package Manager | npm | pnpm |
+| Package Manager | yarn | npm |
 | Form Backend | Cloudflare Workers → Telegram Bot | Email via Resend |
 | Telegram Bot | Cloudflare Workers (webhook) + grammY | Railway / VPS |
 
@@ -26,7 +26,7 @@
 - **Lead capture**: Callback request form → Telegram bot notification; prominent phone CTA; WhatsApp/Telegram links
 - **Pricing**: Not shown publicly — "contact for a quote"
 - **Testimonials**: Manually managed as content
-- **Domain**: To be decided later
+- **Domain**: `bmw-electric-spb.ru`
 
 ## Decisions
 
@@ -154,20 +154,20 @@ const testimonials = defineCollection({
 
 **Pipeline stages**:
 1. Push to GitHub triggers Cloudflare Pages webhook
-2. Cloudflare installs dependencies (`npm install`)
-3. Runs Astro build (`npm run build`)
+2. Cloudflare installs dependencies (`yarn install`)
+3. Runs Astro build (`yarn build`)
 4. Deploys to Cloudflare's edge CDN globally
 5. Preview URL generated for PRs
 
 **Estimated build time**: Under 30 seconds for a small Astro site.
 
-### Package Manager: npm
+### Package Manager: yarn
 
-**Why**: npm ships with Node.js — zero additional tooling required. Every CI/CD environment, including Cloudflare Pages, supports it out of the box with no extra configuration. For a small Astro site with few dependencies, the performance difference vs pnpm is negligible. Keeping the build as close to barebone Node.js as possible reduces moving parts and lowers the barrier for contributors.
+**Why**: yarn provides deterministic installs via `yarn.lock`, a cleaner CLI output, and faster install times compared to npm. Cloudflare Pages detects `yarn.lock` and uses yarn automatically. The project migrated from pnpm → npm → yarn as the team settled on a preferred workflow.
 
-**Trade-offs**: Slightly slower installs and more disk usage than pnpm. No strict dependency isolation (phantom dependencies are theoretically possible but unlikely at this project's scale).
+**Trade-offs**: Requires yarn to be installed globally (unlike npm which ships with Node.js). Uses flat `node_modules` like npm.
 
-**See also**: [ADR-001](adr/001-switch-pnpm-to-npm.md) for the migration rationale.
+**See also**: [ADR-001](adr/001-switch-pnpm-to-npm.md) for the original pnpm → npm migration, then superseded by the switch to yarn.
 
 ### Interactive Telegram Bot: Cloudflare Workers + grammY
 
@@ -183,7 +183,7 @@ const testimonials = defineCollection({
 **Tech stack**:
 - **grammY** framework with `webhookCallback(bot, "cloudflare-mod")` adapter
 - **Cloudflare KV** for session state (which step the user is on in a conversation flow)
-- **npm workspaces** monorepo: bot lives in `packages/bot/` with its own `wrangler.toml`
+- **yarn workspaces** monorepo: bot lives in `packages/bot/` with its own `wrangler.toml`
 - Deployed independently from the site via `wrangler deploy`
 
 **Trade-offs**: Workers have 10ms CPU time on free tier (sufficient for this use case). Stateless execution means conversation state must be persisted to KV on every message. Local development requires `wrangler dev` + a test bot.
@@ -223,7 +223,7 @@ const testimonials = defineCollection({
 4. Create homepage with hero, services overview, testimonials section
 5. Build service page template and populate initial service pages
 6. Build blog index and post template
-7. Set up Tina CMS: `npm install tinacms` and configure `tina/config.ts`
+7. Set up Tina CMS: `yarn add tinacms` and configure `tina/config.ts`
 8. Create Cloudflare Worker for callback form → Telegram bot
 9. Connect GitHub repo to Cloudflare Pages for automatic deployments
 10. Configure custom domain when ready

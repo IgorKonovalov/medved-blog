@@ -14,7 +14,7 @@ An interactive Telegram bot hosted on Cloudflare Workers (webhook mode) that let
 - **Hosting**: Cloudflare Workers (webhook mode, free tier)
 - **Framework**: grammY with `webhookCallback(bot, "cloudflare-mod")`
 - **State**: Cloudflare KV via `@grammyjs/storage-cloudflare`
-- **Monorepo**: npm workspaces, bot lives in `packages/bot/`
+- **Monorepo**: yarn workspaces, bot lives in `packages/bot/`
 
 ## Affected Files
 
@@ -22,7 +22,7 @@ An interactive Telegram bot hosted on Cloudflare Workers (webhook mode) that let
 
 | File | Change description |
 |---|---|
-| `package.json` | Add `"workspaces": ["packages/*"]` for npm workspaces |
+| `package.json` | Add `"workspaces": ["packages/*"]` for yarn workspaces |
 
 ### New files to create
 
@@ -88,7 +88,7 @@ interface Env {
 
 ## Implementation Steps
 
-### Step 1: Set up monorepo with npm workspaces
+### Step 1: Set up monorepo with yarn workspaces
 
 - **Complexity**: S
 - **Files**: `package.json`, `packages/bot/package.json`, `packages/bot/tsconfig.json`
@@ -98,8 +98,8 @@ interface Env {
      - `grammy`
      - `@grammyjs/storage-cloudflare`
   3. Create `packages/bot/tsconfig.json` extending base TypeScript strict config
-  4. Run `npm install` from root to set up workspace symlinks
-- **Acceptance**: `npm ls grammy` shows the package installed in `packages/bot`. Root `node_modules` contains hoisted deps.
+  4. Run `yarn install` from root to set up workspace symlinks
+- **Acceptance**: `yarn list grammy` shows the package installed in `packages/bot`. Root `node_modules` contains hoisted deps.
 
 ### Step 2: Configure Cloudflare Worker
 
@@ -201,7 +201,7 @@ interface Env {
   6. Verify: `curl "https://api.telegram.org/bot<TOKEN>/getWebhookInfo"`
 - **Acceptance**: Bot responds to `/start` on Telegram. Full callback flow works end-to-end.
 
-### Step 10: Add npm scripts for bot development
+### Step 10: Add scripts for bot development
 
 - **Complexity**: S
 - **Files**: `package.json` (root), `packages/bot/package.json`
@@ -211,9 +211,9 @@ interface Env {
      - `"deploy": "wrangler deploy"`
      - `"check": "tsc --noEmit"`
   2. Add to root `package.json`:
-     - `"bot:dev": "npm run dev -w packages/bot"`
-     - `"bot:deploy": "npm run deploy -w packages/bot"`
-- **Acceptance**: `npm run bot:dev` starts the bot locally. `npm run bot:deploy` deploys to Cloudflare.
+     - `"bot:dev": "yarn dev -w packages/bot"`
+     - `"bot:deploy": "yarn deploy -w packages/bot"`
+- **Acceptance**: `yarn bot:dev` starts the bot locally. `yarn bot:deploy` deploys to Cloudflare.
 
 ## NFR Considerations
 
@@ -239,7 +239,7 @@ interface Env {
 - [ ] Rate limiting rejects rapid-fire requests
 - [ ] Invalid phone format is caught and user is re-prompted
 - [ ] Webhook secret verification rejects unauthorized POST requests
-- [ ] `npm run check` passes in both root and bot workspace
+- [ ] `yarn check` passes in both root and bot workspace
 
 ## Open Questions
 

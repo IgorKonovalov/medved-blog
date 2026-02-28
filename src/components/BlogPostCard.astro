@@ -1,12 +1,19 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import TagList from './TagList.astro';
+
 interface Props {
   title: string;
   date: Date;
   description: string;
   slug: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+  tags?: string[];
 }
 
-const { title, date, description, slug } = Astro.props;
+const { title, date, description, slug, image, imageAlt, tags = [] } = Astro.props;
 const formattedDate = date.toLocaleDateString('ru-RU', {
   year: 'numeric',
   month: 'long',
@@ -15,23 +22,39 @@ const formattedDate = date.toLocaleDateString('ru-RU', {
 ---
 
 <article class="post-card">
-  <time datetime={date.toISOString().split('T')[0]}>{formattedDate}</time>
-  <h3><a href={`/blog/${slug}/`}>{title}</a></h3>
-  <p>{description}</p>
+  {image && (
+    <Image src={image} alt={imageAlt || ''} width={480} height={270} class="post-card__image" loading="lazy" />
+  )}
+  <div class="post-card__body">
+    <time datetime={date.toISOString().split('T')[0]}>{formattedDate}</time>
+    <h3><a href={`/blog/${slug}/`}>{title}</a></h3>
+    <p>{description}</p>
+    {tags.length > 0 && <TagList tags={tags.slice(0, 3)} size="sm" />}
+  </div>
 </article>
 
 <style>
   .post-card {
-    padding: var(--space-lg);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     background-color: var(--color-bg);
     box-shadow: var(--shadow-sm);
     transition: box-shadow 0.2s;
+    overflow: hidden;
   }
 
   .post-card:hover {
     box-shadow: var(--shadow-md);
+  }
+
+  .post-card__image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .post-card__body {
+    padding: var(--space-lg);
   }
 
   time {

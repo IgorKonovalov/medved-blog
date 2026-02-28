@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BlogPostCard from '../../../components/BlogPostCard.astro';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('blog')).filter((p) => !p.data.draft);
+
+  const tagMap = new Map<string, typeof posts>();
+  for (const post of posts) {
+    for (const tag of post.data.tags) {
+      const existing = tagMap.get(tag) ?? [];
+      existing.push(post);
+      tagMap.set(tag, existing);
+    }
+  }
+
+  return Array.from(tagMap.entries()).map(([tag, tagPosts]) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: tagPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime()),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout
+  title={`${tag} — блог автоэлектрика BMW`}
+  description={`Статьи по теме «${tag}» — блог автоэлектрика BMW в Санкт-Петербурге`}
+>
+  <section class="tag-page">
+    <h1>Статьи по теме: {tag}</h1>
+    <div class="posts-list">
+      {posts.map((post) => (
+        <BlogPostCard
+          title={post.data.title}
+          date={post.data.date}
+          description={post.data.description}
+          slug={post.id}
+          image={post.data.image}
+          imageAlt={post.data.imageAlt}
+        />
+      ))}
+    </div>
+    <p class="back-link"><a href="/blog/">&larr; Все статьи</a></p>
+  </section>
+</BaseLayout>
+
+<style>
+  .tag-page {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--space-2xl) var(--space-md);
+  }
+
+  .tag-page h1 {
+    margin-bottom: var(--space-xl);
+  }
+
+  .posts-list {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .back-link {
+    margin-top: var(--space-xl);
+  }
+
+  .back-link a {
+    font-weight: 600;
+    text-decoration: none;
+  }
+</style>

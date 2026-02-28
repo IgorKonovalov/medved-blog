@@ -1,16 +1,23 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import BaseLayout from './BaseLayout.astro';
 
 interface Props {
   title: string;
   description: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, image, imageAlt } = Astro.props;
 ---
 
 <BaseLayout title={`${title} — автоэлектрик BMW`} description={description}>
   <article class="service-detail">
+    {image && (
+      <Image src={image} alt={imageAlt || ''} width={960} class="hero-image" loading="eager" />
+    )}
     <h1>{title}</h1>
     <div class="prose">
       <slot />
@@ -27,6 +34,13 @@ const { title, description } = Astro.props;
     max-width: var(--content-width);
     margin: 0 auto;
     padding: var(--space-2xl) var(--space-md);
+  }
+
+  .hero-image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-xl);
   }
 
   .service-detail h1 {

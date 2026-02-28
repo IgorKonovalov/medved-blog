@@ -17,6 +17,8 @@ const services = (await getCollection('services'))
           title={service.data.title}
           description={service.data.description}
           slug={service.id}
+          image={service.data.image}
+          imageAlt={service.data.imageAlt}
         />
       ))}
     </div>
