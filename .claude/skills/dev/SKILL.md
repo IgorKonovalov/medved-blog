@@ -36,7 +36,7 @@ Execute each plan step in order. For every step:
 
 1. **Read existing files** that will be modified — understand context before changing code
 2. **Implement the change** following the plan's instructions and acceptance criteria
-3. **Run the build** (`npm run build`) to verify no errors
+3. **Run the build** (`yarn build`) to verify no errors
 4. **Verify acceptance criteria** from the plan
 5. **Mark the step done** — update the plan's step status if the user confirms
 
@@ -46,7 +46,7 @@ After completing a step, summarize what was done and ask whether to proceed to t
 
 When all plan steps are complete:
 
-1. Run a full build (`npm run build`) to verify the site compiles
+1. Run a full build (`yarn build`) to verify the site compiles
 2. Summarize what was implemented
 3. Note any follow-up tasks from the plan
 4. Suggest invoking the **blog-architect** skill to review the implementation against NFRs
@@ -90,7 +90,7 @@ These are non-negotiable for this project. Consult the full coding standards ref
 
 - **Follow the plan** — implement what was specified, not more. Deviations need user approval.
 - **One step at a time** — each step should leave the site in a deployable state. Never leave broken intermediate states.
-- **Build often** — run `npm run build` after each meaningful change to catch errors early.
+- **Build often** — run `yarn build` after each meaningful change to catch errors early.
 - **Read before write** — always read existing files before modifying them.
 - **Minimal changes** — change only what the step requires. Do not refactor surrounding code or add improvements unless the plan calls for it.
 - **Ask, don't assume** — if the plan is ambiguous or a decision is needed, ask the user rather than guessing.

@@ -217,7 +217,7 @@ const testimonials = defineCollection({
 
 ## Next Steps
 
-1. Scaffold the Astro project: `npm create astro@latest`
+1. Scaffold the Astro project: `yarn create astro`
 2. Set up Content Collections for services, blog, and testimonials
 3. Build core layout: header with phone/messenger CTAs, footer, mobile sticky bar
 4. Create homepage with hero, services overview, testimonials section

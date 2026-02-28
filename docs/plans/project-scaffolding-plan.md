@@ -29,7 +29,7 @@ This plan is split into 5 phases. Each phase ends with a manual testing checkpoi
 
 | File | Purpose |
 |---|---|
-| `package.json` | Project manifest (created by `npm create astro`) |
+| `package.json` | Project manifest (created by `yarn create astro`) |
 | `astro.config.mjs` | Astro configuration with sitemap integration |
 | `tsconfig.json` | Extends `astro/tsconfigs/strict` |
 | `.gitignore` | Updated with Astro/node ignores alongside existing Claude ignores |
@@ -39,7 +39,7 @@ This plan is split into 5 phases. Each phase ends with a manual testing checkpoi
 ### Step 1.1: Scaffold Astro project
 
 - **Complexity**: S
-- **What**: Run `npm create astro@latest` with the minimal (empty) template, TypeScript strict mode. This generates `package.json`, `astro.config.mjs`, `tsconfig.json`, `src/env.d.ts`, and a starter `src/pages/index.astro`.
+- **What**: Run `yarn create astro@latest` with the minimal (empty) template, TypeScript strict mode. This generates `package.json`, `astro.config.mjs`, `tsconfig.json`, `src/env.d.ts`, and a starter `src/pages/index.astro`.
 - **Important**: The scaffolder will try to create in a subdirectory — we need it to scaffold in the current repo root. Use `.` as the target directory. If the scaffolder conflicts with existing files (docs, .claude), resolve by keeping our existing files.
 - **Acceptance**: `yarn install` completes without errors.
 
