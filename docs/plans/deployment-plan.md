@@ -1,7 +1,7 @@
 # Implementation Plan: Cloudflare Pages Deployment
 
 > Created: 2026-02-28
-> Status: draft
+> Status: in-progress
 
 ## Overview
 
@@ -13,24 +13,24 @@ Deploy the medved-blog site to Cloudflare Pages with custom domain `bmw-electric
 - `site` is set to `https://bmw-electric-spb.ru` in `astro.config.mjs`
 - Sitemap generates at `dist/sitemap-index.xml`
 - Custom 404 page at `dist/404.html`
-- No `public/` directory yet (no robots.txt, no favicon, no `_headers`)
-- No Cloudflare Pages project connected
+- ~~No `public/` directory yet (no robots.txt, no favicon, no `_headers`)~~ ✅ Done
+- ~~No Cloudflare Pages project connected~~ ✅ Done
 - Domain `bmw-electric-spb.ru` registered at **reg.ru**
-- No Cloudflare account yet — needs to be created
+- ~~No Cloudflare account yet — needs to be created~~ ✅ Done
 
 ## Phases
 
-| Phase | What it delivers | Complexity |
-|---|---|---|
-| 1 | Cloudflare account + GitHub connection | S |
-| 2 | Pre-deployment assets (robots.txt, favicon, security headers) | S |
-| 3 | Cloudflare Pages project + first deploy | S |
-| 4 | DNS transfer from reg.ru to Cloudflare + custom domain + SSL | M |
-| 5 | Post-deployment verification & search engine submission | S |
+| Phase | What it delivers | Complexity | Status |
+|---|---|---|---|
+| 1 | Cloudflare account + GitHub connection | S | ✅ Done |
+| 2 | Pre-deployment assets (robots.txt, favicon, security headers) | S | ✅ Done |
+| 3 | Cloudflare Pages project + first deploy | S | ✅ Done |
+| 4 | DNS transfer from reg.ru to Cloudflare + custom domain + SSL | M | ✅ Done |
+| 5 | Post-deployment verification & search engine submission | S | 🔶 Partial |
 
 ---
 
-## Phase 1: Cloudflare Account Setup
+## Phase 1: Cloudflare Account Setup ✅
 
 > **Goal**: Create a Cloudflare account and connect the GitHub repo. This is a prerequisite for everything else.
 
@@ -56,7 +56,7 @@ Deploy the medved-blog site to Cloudflare Pages with custom domain `bmw-electric
 
 ---
 
-## Phase 2: Pre-deployment Assets
+## Phase 2: Pre-deployment Assets ✅
 
 > **Goal**: Create the static files that Cloudflare Pages serves alongside the built site — robots.txt, favicon, and security/cache headers.
 
@@ -142,7 +142,7 @@ Deploy the medved-blog site to Cloudflare Pages with custom domain `bmw-electric
 
 ---
 
-## Phase 3: Cloudflare Pages Project
+## Phase 3: Cloudflare Pages Project ✅
 
 > **Goal**: Create the Pages project and deploy. Site is live on the `*.pages.dev` subdomain.
 
@@ -187,7 +187,7 @@ Deploy the medved-blog site to Cloudflare Pages with custom domain `bmw-electric
 
 ---
 
-## Phase 4: DNS Transfer from reg.ru to Cloudflare + Custom Domain
+## Phase 4: DNS Transfer from reg.ru to Cloudflare + Custom Domain ✅
 
 > **Goal**: Move DNS management from reg.ru to Cloudflare (free), then point `bmw-electric-spb.ru` to Cloudflare Pages. SSL auto-provisioned.
 
@@ -197,7 +197,7 @@ Deploy the medved-blog site to Cloudflare Pages with custom domain `bmw-electric
 
 - **Complexity**: S
 - **What**: In the Cloudflare dashboard:
-  1. Click **Add a site** (or **Add site** in the sidebar)
+  1. Click **Add domain** in the sidebar (or on the dashboard homepage)
   2. Enter `bmw-electric-spb.ru`
   3. Select the **Free** plan → **Continue**
   4. Cloudflare scans existing DNS records — review the list and confirm
@@ -258,11 +258,11 @@ Deploy the medved-blog site to Cloudflare Pages with custom domain `bmw-electric
 
 ---
 
-## Phase 5: Post-deployment Verification
+## Phase 5: Post-deployment Verification 🔶
 
 > **Goal**: Confirm the live site is production-ready. Submit to search engines.
 
-### Step 5.1: Lighthouse audit
+### Step 5.1: Lighthouse audit ✅
 
 - **Complexity**: S
 - **What**: Run Lighthouse in Chrome DevTools on the live site (at least homepage + one blog post):
@@ -273,7 +273,7 @@ Deploy the medved-blog site to Cloudflare Pages with custom domain `bmw-electric
 - **Fix**: Address any issues scored below 90 before proceeding.
 - **Acceptance**: All four categories score 90+ on mobile.
 
-### Step 5.2: Submit to Yandex Webmaster
+### Step 5.2: Submit to Yandex Webmaster ⏳ (deferred until content/design ready)
 
 - **Complexity**: S
 - **What**: Yandex is the primary search engine for Russian users:
@@ -284,7 +284,7 @@ Deploy the medved-blog site to Cloudflare Pages with custom domain `bmw-electric
   5. Set preferred region to "Санкт-Петербург" in site settings
 - **Acceptance**: Site verified in Yandex Webmaster, sitemap submitted, region set.
 
-### Step 5.3: Submit to Google Search Console
+### Step 5.3: Submit to Google Search Console ⏳ (deferred until content/design ready)
 
 - **Complexity**: S
 - **What**:
@@ -295,7 +295,7 @@ Deploy the medved-blog site to Cloudflare Pages with custom domain `bmw-electric
   5. Request indexing on key pages (homepage, services, blog)
 - **Acceptance**: Site verified in Google Search Console, sitemap submitted.
 
-### Step 5.4: Functional smoke test on production
+### Step 5.4: Functional smoke test on production ⏳ (deferred until content/design ready)
 
 - **Complexity**: S
 - **What**: Manual check of all critical paths on the live site:
