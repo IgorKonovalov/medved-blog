@@ -161,7 +161,7 @@ From `blog-stack-decisions.md`:
   {
     "scripts": {
       "dev": "astro dev",
-      "dev:cms": "tinacms dev -c \"astro dev\"",
+      "dev:cms": "tinacms build --local --skip-cloud-checks --skip-search-index && tinacms dev -c \"astro dev\"",
       "build": "astro build",
       "build:cms": "tinacms build --local --skip-cloud-checks --skip-search-index && astro build",
       "build:cms:prod": "tinacms build --skip-search-index && astro build",
@@ -170,6 +170,7 @@ From `blog-stack-decisions.md`:
     }
   }
   ```
+  - `dev:cms` **pre-builds the admin** to `public/admin/` before starting the dev server — this is required so that `localhost:4321/admin/` serves the correct entry point
   - `tinacms dev` always runs in local mode — no extra flags needed; no cloud credentials required
   - `tinacms build --local` — local mode for `build:cms`; `--skip-cloud-checks` skips client ID validation; `--skip-search-index` avoids `better-sqlite3` (not built on Node 25/Windows without VS Build Tools)
   - `build:cms:prod` — production build for Phase 5 (Cloudflare Pages, requires `TINA_CLIENT_ID` + `TINA_TOKEN`)
@@ -193,8 +194,9 @@ From `blog-stack-decisions.md`:
 ### Manual Testing — Phase 1
 
 ```
-1. yarn dev:cms
-2. Open http://localhost:4001  (Tina dev server — NOT port 4321)
+1. yarn dev:cms  (builds admin to public/admin/, then starts Tina:4001 + Astro:4321)
+2. Open http://localhost:4321/admin/  ← USE ASTRO'S PORT, not 4001
+   (Images in the editor resolve against localhost:4321 where Astro serves public/)
 3. Verify: Tina sidebar shows "Блог" collection
 4. Click the seed blog post → visual editor opens
 5. Edit the title → save → check that src/content/blog/primer-stati/index.md is updated
@@ -203,6 +205,9 @@ From `blog-stack-decisions.md`:
 8. yarn build:cms → verify dist/ includes admin/ directory
 9. yarn check — no TypeScript errors
 ```
+
+> **Why localhost:4321/admin/ not localhost:4001?**
+> Tina's Vite dev server (port 4001) has its root in `node_modules/@tinacms/app/` and does NOT serve the project's `public/` folder. Images referenced in content (stored at `public/images/`) return 404 from port 4001. The `dev:cms` pre-build step generates `public/admin/index.html` which loads the Tina React app from port 4001 but keeps the document origin at port 4321 — so all image URLs resolve correctly via Astro's static file server. The Tina GraphQL API is called via absolute URL `http://localhost:4001/graphql` and works regardless of origin.
 
 ---
 
@@ -288,52 +293,47 @@ From `blog-stack-decisions.md`:
 
 ---
 
-## Phase 3: Media Management
+## Phase 3: Media Management ✅
 
-> **Goal**: Content writers can upload and manage images through Tina's media manager. Images are stored co-located with content (matching our architecture convention).
+> **Goal**: Content writers can upload and manage images through Tina's media manager.
 
-### Step 3.1: Configure Tina media for co-located images
+### Implementation (Option 2 — public/images/) ✅
 
-- **Complexity**: M
-- **Files**: `tina/config.ts`
-- **What**: Tina's media configuration must handle the co-located image pattern (images in the same directory as the markdown file). This is the trickiest part of Tina integration.
+Option 1 (co-located images in `src/content/`) was not viable with Tina's media manager:
+- Tina's Vite dev server root is `node_modules/@tinacms/app/`, not the project root
+- Images in `src/content/` cannot be served by Tina's dev server
+- Astro's `image()` schema helper does not work with images stored outside `src/`
 
-  **Challenge**: Tina's default media handler stores images in a flat `public/uploads/` directory. Our convention is images next to their markdown file (e.g., `src/content/blog/my-post/hero.jpg`).
+**Implemented Option 2** — images in `public/images/` with absolute paths:
 
-  **Options**:
-  1. **Tina media with relative paths** — Configure `media.tina.mediaRoot` to `src/content`. When a writer uploads an image for a blog post, Tina stores it relative to the content root. The frontmatter `image` field gets a relative path like `./hero.jpg`.
-  2. **Move to public/ for media** — Simpler Tina config but breaks the co-location convention. Images in `public/images/blog/` referenced by absolute path.
-  3. **External media** (Cloudflare R2 or S3) — overkill for this scale.
+| File | Change |
+|---|---|
+| `tina/config.ts` | `media.tina: { publicFolder: 'public', mediaRoot: 'images' }` |
+| `src/content.config.ts` | `image()` → `z.string().optional()` for blog and services |
+| `src/layouts/BlogPostLayout.astro` | `ImageMetadata` → `string`, `<Image>` → `<img>` |
+| `src/components/BlogPostCard.astro` | Same |
+| `src/layouts/ServiceLayout.astro` | Same |
+| `src/components/ServiceCard.astro` | Same |
+| `src/content/blog/primer-stati/index.md` | `image: /images/blog/primer-stati/hero.jpg` |
+| `src/content/services/diagnostika-elektriki/index.md` | `image: /images/services/diagnostika-elektriki/hero.jpg` |
+| `public/images/blog/primer-stati/hero.jpg` | Moved from `src/content/` |
+| `public/images/services/diagnostika-elektriki/hero.jpg` | Moved from `src/content/` |
 
-  **Recommended**: Option 1 — keep co-located images. Configure media root as content directory. Test that Astro's `image()` schema helper resolves the paths Tina generates.
+**Trade-off**: Images in `public/` are not processed by Astro's image optimization pipeline (no webp conversion, no srcset). For this site's current scale this is acceptable — can be revisited if performance becomes a concern.
 
-  If option 1 doesn't work cleanly with Tina (known friction point), fall back to option 2 with images in `public/images/` and update the content collection schemas from `image()` to `z.string()`.
-
-- **Acceptance**: Upload an image via Tina media manager → image saved in correct directory → frontmatter references it correctly → Astro builds and optimizes the image.
-
-### Step 3.2: Test image upload workflow
-
-- **Complexity**: S
-- **What**: End-to-end test:
-  1. Open Tina editor for a blog post
-  2. Click the image field → Tina media manager opens
-  3. Upload a new image
-  4. Verify: image saved to `src/content/blog/{slug}/` directory
-  5. Verify: frontmatter `image` field set to `./filename.jpg`
-  6. Run `yarn build` → Astro resolves and optimizes the image
-  7. Check the built page — image displays correctly
-- **If this fails**: Document the issue and implement the `public/images/` fallback.
-- **Acceptance**: Full round-trip works — upload → save → build → display.
+**Image upload workflow**: Tina media manager stores uploads to `public/images/`. The `image` field in frontmatter gets an absolute path like `/images/blog/my-post/hero.jpg`.
 
 ### Manual Testing — Phase 3
 
 ```
 1. yarn dev:cms
-2. Edit seed blog post → upload a new hero image via Tina
-3. Save → verify image file location in file system
-4. Verify frontmatter path is correct
-5. yarn build:cms — image optimized in dist/
-6. Preview — image displays on the blog post page
+2. Open http://localhost:4321/admin/
+3. Edit seed blog post → click image field → Tina media manager opens
+4. Verify: existing images at public/images/ are visible with thumbnails
+5. Upload a new image → verify saved to public/images/
+6. Select the image → save post → verify frontmatter updated with /images/... path
+7. yarn build:cms — clean build, no errors
+8. yarn preview → image displays on the blog post page
 ```
 
 ---
