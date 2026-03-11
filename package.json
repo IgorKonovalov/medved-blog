@@ -4,17 +4,26 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
+    "dev:cms": "tinacms dev -c \"astro dev\"",
     "build": "astro build",
+    "build:cms": "tinacms build --local --skip-cloud-checks --skip-search-index && astro build",
+    "build:cms:prod": "tinacms build --skip-search-index && astro build",
     "preview": "astro preview",
     "check": "astro check"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
-    "astro": "^5.5.0"
+    "astro": "^5.5.0",
+    "tinacms": "^3.6.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.0",
+    "@tinacms/cli": "^2.1.9",
+    "react": "^18",
+    "react-dnd": "^16",
+    "react-dnd-html5-backend": "^16",
+    "react-dom": "^18",
     "typescript": "^5.8.0"
   }
 }

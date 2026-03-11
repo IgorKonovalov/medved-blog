@@ -20,6 +20,10 @@ dist/
 .DS_Store
 Thumbs.db
 
+# Tina CMS
+tina/__generated__/
+public/admin/
+
 # Claude Code
 .claude/settings.local.json
 CLAUDE.local.md
