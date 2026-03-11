@@ -1,6 +1,4 @@
 ---
-import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
 import BaseLayout from './BaseLayout.astro';
 import TagList from '../components/TagList.astro';
 import ArticleJsonLd from '../components/ArticleJsonLd.astro';
@@ -16,7 +14,7 @@ interface Props {
   date: Date;
   updated?: Date;
   tags: string[];
-  image?: ImageMetadata;
+  image?: string;
   imageAlt?: string;
   readingTime?: number;
   prevPost?: PostLink | null;
@@ -60,7 +58,7 @@ const pageURL = new URL(Astro.url.pathname, Astro.site).href;
   />
   <article class="blog-post">
     {image && (
-      <Image src={image} alt={imageAlt || ''} width={960} class="hero-image" loading="eager" />
+      <img src={image} alt={imageAlt || ''} width="960" class="hero-image" loading="eager" />
     )}
     <header class="post-header">
       <h1>{title}</h1>

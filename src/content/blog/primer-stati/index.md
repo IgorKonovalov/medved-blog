@@ -7,7 +7,7 @@ tags:
   - диагностика
   - своими руками
 draft: false
-image: ./hero.jpg
+image: /images/blog/primer-stati/hero.jpg
 imageAlt: Двигатель BMW с открытым капотом
 ---
 

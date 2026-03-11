@@ -1,12 +1,10 @@
 ---
-import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
 import BaseLayout from './BaseLayout.astro';
 
 interface Props {
   title: string;
   description: string;
-  image?: ImageMetadata;
+  image?: string;
   imageAlt?: string;
 }
 
@@ -16,7 +14,7 @@ const { title, description, image, imageAlt } = Astro.props;
 <BaseLayout title={`${title} — автоэлектрик BMW`} description={description}>
   <article class="service-detail">
     {image && (
-      <Image src={image} alt={imageAlt || ''} width={960} class="hero-image" loading="eager" />
+      <img src={image} alt={imageAlt || ''} width="960" class="hero-image" loading="eager" />
     )}
     <h1>{title}</h1>
     <div class="prose">

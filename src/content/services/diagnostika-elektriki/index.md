@@ -3,7 +3,7 @@ title: Диагностика электрики BMW
 description: Компьютерная диагностика электрооборудования BMW всех серий. Поиск неисправностей, чтение ошибок, проверка датчиков.
 order: 1
 draft: false
-image: ./hero.jpg
+image: /images/services/diagnostika-elektriki/hero.jpg
 imageAlt: Диагностика электрики BMW на дилерском оборудовании
 ---
 
