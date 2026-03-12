@@ -37,8 +37,8 @@ From `blog-stack-decisions.md`:
 | 1 | Tina installed + schema for blog collection (local mode) | M |
 | 2 | Services and testimonials collection schemas | S |
 | 3 | Media management (co-located images) | M |
-| 4 | Tina Cloud setup (production editing) | S |
-| 5 | Build integration + Cloudflare Pages update | S |
+| 4 | Tina Cloud setup (production editing) ✅ | S |
+| 5 | Build integration + Cloudflare Pages update ✅ | S |
 
 ---
 

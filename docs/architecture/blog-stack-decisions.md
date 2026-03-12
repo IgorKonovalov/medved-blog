@@ -116,6 +116,16 @@ const testimonials = defineCollection({
 
 **Migration path**: Since content is stored as standard markdown files in Git, switching to another CMS (Decap, Sanity, or even no CMS) requires no content migration — only the editing interface changes.
 
+**Implementation notes** (completed 2026-03-12):
+- `tinacms` + `@tinacms/cli` are separate packages — CLI binary is in `@tinacms/cli`
+- `tinacms build` flags used: `--skip-search-index` (avoids `better-sqlite3` native module)
+- Images stored in `public/images/` (not `src/content/`) — required for Tina media manager
+- Image schema uses `z.string().optional()` (not Astro's `image()` helper); components use `<img>` not `<Image>`
+- Admin SPA served at `/admin/` via Astro dev server (Vite plugin rewrites `/admin/` → `/admin/index.html`)
+- Cloudflare Pages build command: `yarn build:cms:prod`
+- Production admin at `https://bmw-electric-spb.ru/admin/` — login via Tina Cloud (GitHub OAuth)
+- Schema dual-maintenance: Tina schema and Astro Content Collection schema are kept in sync manually — see [ADR-003](adr/003-tina-astro-schema-sync.md)
+
 ### Hosting: Cloudflare Pages
 
 **Why**: Cloudflare operates the largest global CDN with edge nodes in Russia, providing the best latency for Saint Petersburg users. The free tier includes **unlimited bandwidth** — the only major platform offering this. Cloudflare Workers (included free, 100K requests/day) handle the callback form backend without needing a separate server. Deploy previews are included per PR.
@@ -150,16 +160,17 @@ const testimonials = defineCollection({
 
 ### Build & CI/CD: Cloudflare Pages Built-in
 
-**Why**: Cloudflare Pages auto-detects Astro projects and handles the full build pipeline. Push to `main` triggers auto-deploy; pull requests get preview URLs. 500 builds/month is plenty for a small site. No separate CI config to maintain.
+**Why**: Cloudflare Pages auto-detects Astro projects and handles the full build pipeline. Push to `master` triggers auto-deploy. 500 builds/month is plenty for a small site. No separate CI config to maintain.
 
 **Pipeline stages**:
 1. Push to GitHub triggers Cloudflare Pages webhook
 2. Cloudflare installs dependencies (`yarn install`)
-3. Runs Astro build (`yarn build`)
-4. Deploys to Cloudflare's edge CDN globally
-5. Preview URL generated for PRs
+3. Runs `yarn build:cms:prod` (Tina build → Astro build)
+4. Deploys `dist/` to Cloudflare's edge CDN globally
 
-**Estimated build time**: Under 30 seconds for a small Astro site.
+**Estimated build time**: ~60-90 seconds (Tina Cloud indexing adds ~50s to Astro's ~10s).
+
+**Note**: This project uses Cloudflare **Pages** (static hosting), not Cloudflare Workers. Do not add a deploy command — Pages deploys automatically after the build command succeeds.
 
 ### Package Manager: yarn
 

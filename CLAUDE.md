@@ -22,10 +22,12 @@ medved-blog is a service website + blog for a BMW auto electrician in Saint Pete
 ## Commands
 
 ```
-yarn dev        # Dev server
-yarn build      # Production build
-yarn preview    # Preview built site
-yarn check      # TypeScript + Astro validation
+yarn dev            # Dev server (no CMS editor)
+yarn dev:cms        # Dev server with Tina CMS editor at http://localhost:4321/admin/
+yarn build          # Production build (no CMS admin)
+yarn build:cms:prod # Production build with Tina admin (used by Cloudflare Pages)
+yarn preview        # Preview built site
+yarn check          # TypeScript + Astro validation
 ```
 
 ## Project Conventions
@@ -36,7 +38,9 @@ yarn check      # TypeScript + Astro validation
 - Utilities: `camelCase.ts` in `src/utils/`
 - Scoped `<style>` blocks by default; global CSS only for tokens and reset
 - Content headings start at `##` (the `<h1>` comes from the page layout)
-- Images co-located with their markdown file in the same directory
+- Images stored in `public/images/` (not co-located) — required for Tina media manager
+- `tina/config.ts` schema must stay in sync with `src/content.config.ts` — see ADR-003
+- `tina/__generated__/` and `public/admin/` are gitignored (build artifacts)
 
 ## Architecture Documentation
 
