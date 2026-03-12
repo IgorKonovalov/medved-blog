@@ -7,8 +7,8 @@ tags:
   - диагностика
   - своими руками
 draft: false
-image: /images/blog/primer-stati/hero.jpg
-imageAlt: Двигатель BMW с открытым капотом
+image: /images/blog/primer-stati/Brake-Repair-980x735.jpg
+imageAlt: Починка диска
 ---
 
 ## Признаки неисправности генератора
