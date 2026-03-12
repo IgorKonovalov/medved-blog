@@ -1,7 +1,7 @@
 # Implementation Plan: Cloudflare Pages Deployment
 
 > Created: 2026-02-28
-> Status: in-progress
+> Status: in-progress (phases 1–4 complete; phase 5 deferred until content/design ready)
 
 ## Overview
 
@@ -154,7 +154,7 @@ Deploy the medved-blog site to Cloudflare Pages with custom domain `bmw-electric
   2. Select the `medved-blog` GitHub repository (already authorized in Phase 1)
   3. Configure build settings:
      - **Framework preset**: Astro
-     - **Build command**: `yarn build`
+     - **Build command**: `yarn build:cms:prod` (includes Tina admin build)
      - **Build output directory**: `dist`
      - **Root directory**: `/` (default)
      - **Node.js version**: `22` (matches `.nvmrc`)
