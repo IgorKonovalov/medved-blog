@@ -23,10 +23,18 @@ export default defineConfig({
         name: 'blog',
         label: 'Блог',
         path: 'src/content/blog',
-        match: {
-          include: '*/index',
-        },
         format: 'md',
+        ui: {
+          filename: {
+            readonly: false,
+            slugify: (values: Record<string, string>) => {
+              return values?.title
+                ?.toLowerCase()
+                .replace(/[^a-zа-яё0-9]+/gi, '-')
+                .replace(/^-+|-+$/g, '') || 'new-post';
+            },
+          },
+        },
         fields: [
           {
             type: 'string',
@@ -88,10 +96,18 @@ export default defineConfig({
         name: 'services',
         label: 'Услуги',
         path: 'src/content/services',
-        match: {
-          include: '*/index',
-        },
         format: 'md',
+        ui: {
+          filename: {
+            readonly: false,
+            slugify: (values: Record<string, string>) => {
+              return values?.title
+                ?.toLowerCase()
+                .replace(/[^a-zа-яё0-9]+/gi, '-')
+                .replace(/^-+|-+$/g, '') || 'new-service';
+            },
+          },
+        },
         fields: [
           {
             type: 'string',

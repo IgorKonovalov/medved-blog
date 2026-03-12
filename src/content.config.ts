@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 const services = defineCollection({
-  loader: glob({ pattern: '*/index.md', base: 'src/content/services' }),
+  loader: glob({ pattern: '*.md', base: 'src/content/services' }),
   schema: z.object({
     title: z.string(),
     description: z.string().max(160),
@@ -14,7 +14,7 @@ const services = defineCollection({
 });
 
 const blog = defineCollection({
-  loader: glob({ pattern: '*/index.md', base: 'src/content/blog' }),
+  loader: glob({ pattern: '*.md', base: 'src/content/blog' }),
   schema: z.object({
     title: z.string(),
     date: z.date(),
