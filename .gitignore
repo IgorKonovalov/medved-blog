@@ -25,5 +25,9 @@ tina/__generated__/
 public/admin/
 
 # Claude Code
-.claude/settings.local.json
+.claude/
+CLAUDE.md
 CLAUDE.local.md
+
+# Docs
+docs/

@@ -21,7 +21,9 @@ const formattedDate = date.toLocaleDateString('ru-RU', {
 
 <article class="post-card">
   {image && (
-    <img src={image} alt={imageAlt || ''} width="480" height="270" class="post-card__image" loading="lazy" />
+    <div class="post-card__image-wrap">
+      <img src={image} alt={imageAlt || ''} width="480" height="270" class="post-card__image" loading="lazy" />
+    </div>
   )}
   <div class="post-card__body">
     <time datetime={date.toISOString().split('T')[0]}>{formattedDate}</time>
@@ -37,22 +39,35 @@ const formattedDate = date.toLocaleDateString('ru-RU', {
     border-radius: var(--radius-lg);
     background-color: var(--color-bg);
     box-shadow: var(--shadow-sm);
-    transition: box-shadow 0.2s;
+    transition: box-shadow 0.2s, transform 0.2s;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 
   .post-card:hover {
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+  }
+
+  .post-card__image-wrap {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background-color: var(--color-bg-alt);
   }
 
   .post-card__image {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     display: block;
   }
 
   .post-card__body {
     padding: var(--space-lg);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   time {
@@ -63,6 +78,7 @@ const formattedDate = date.toLocaleDateString('ru-RU', {
   h3 {
     margin-top: var(--space-sm);
     font-size: var(--font-size-lg);
+    font-weight: 700;
   }
 
   h3 a {
@@ -78,5 +94,6 @@ const formattedDate = date.toLocaleDateString('ru-RU', {
     margin-top: var(--space-sm);
     font-size: var(--font-size-sm);
     color: var(--color-text-muted);
+    flex: 1;
   }
 </style>

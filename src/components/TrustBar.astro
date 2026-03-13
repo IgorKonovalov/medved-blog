@@ -1,0 +1,89 @@
+---
+
+---
+
+<section class="trust-bar" aria-label="Ключевые преимущества">
+  <div class="trust-bar-inner">
+    <div class="trust-item">
+      <span class="trust-number">15+</span>
+      <span class="trust-label">лет опыта</span>
+    </div>
+    <div class="trust-item">
+      <span class="trust-number">100+</span>
+      <span class="trust-label">BMW обслужено</span>
+    </div>
+    <div class="trust-item">
+      <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      <span class="trust-label">Дилерское оборудование</span>
+    </div>
+    <div class="trust-item">
+      <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="trust-label">Выезд по СПб</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .trust-bar {
+    background-color: var(--color-surface-dark);
+    color: var(--color-surface-dark-text);
+  }
+
+  .trust-bar-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-xl) var(--space-md);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .trust-bar-inner {
+      grid-template-columns: repeat(4, 1fr);
+      padding: var(--space-2xl) var(--space-md);
+    }
+  }
+
+  .trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  .trust-number {
+    font-size: var(--font-size-3xl);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #fff;
+    line-height: 1;
+  }
+
+  @media (min-width: 768px) {
+    .trust-number {
+      font-size: var(--font-size-4xl);
+    }
+  }
+
+  .trust-icon {
+    color: var(--color-primary);
+    width: 32px;
+    height: 32px;
+  }
+
+  @media (min-width: 768px) {
+    .trust-icon {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .trust-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-surface-dark-muted);
+    font-weight: 500;
+  }
+</style>

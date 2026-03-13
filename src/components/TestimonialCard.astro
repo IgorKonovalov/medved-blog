@@ -7,15 +7,23 @@ interface Props {
 }
 
 const { author, car, rating, body } = Astro.props;
-const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+const filledStars = Math.round(rating);
 ---
 
 <article class="testimonial-card">
-  <div class="testimonial-card__stars" aria-label={`Оценка: ${rating} из 5`}>{stars}</div>
-  <blockquote class="testimonial-card__text">{body}</blockquote>
+  <svg class="testimonial-card__quote" width="32" height="32" viewBox="0 0 24 24" fill="var(--color-primary-light)" aria-hidden="true"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+  <div class="testimonial-card__stars" aria-label={`Оценка: ${rating} из 5`}>
+    {Array.from({ length: 5 }).map((_, i) => (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill={i < filledStars ? 'var(--color-star)' : 'var(--color-border)'} aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    ))}
+  </div>
+  <blockquote class="testimonial-card__text">
+    <slot />
+    {body && !Astro.slots.has('default') && <p>{body}</p>}
+  </blockquote>
   <footer class="testimonial-card__author">
     <strong>{author}</strong>
-    <span>{car}</span>
+    <span class="testimonial-card__car">{car}</span>
   </footer>
 </article>
 
@@ -23,25 +31,38 @@ const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
   .testimonial-card {
     padding: var(--space-lg);
     border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-primary);
     border-radius: var(--radius-lg);
     background-color: var(--color-bg);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .testimonial-card__quote {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    opacity: 0.5;
   }
 
   .testimonial-card__stars {
-    color: var(--color-star);
-    font-size: var(--font-size-lg);
-    letter-spacing: 0.1em;
+    display: flex;
+    gap: 2px;
   }
 
   .testimonial-card__text {
-    margin-top: var(--space-sm);
+    margin-top: var(--space-md);
     font-size: var(--font-size-sm);
     line-height: var(--line-height-base);
     color: var(--color-text);
+    flex: 1;
   }
 
   .testimonial-card__author {
     margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
@@ -49,10 +70,16 @@ const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
 
   .testimonial-card__author strong {
     font-size: var(--font-size-sm);
+    font-weight: 700;
   }
 
-  .testimonial-card__author span {
+  .testimonial-card__car {
     font-size: var(--font-size-xs);
     color: var(--color-text-muted);
+    background-color: var(--color-bg-alt);
+    padding: 0.125rem 0.5rem;
+    border-radius: 100px;
+    display: inline-block;
+    width: fit-content;
   }
 </style>

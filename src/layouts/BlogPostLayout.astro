@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import TagList from '../components/TagList.astro';
 import ArticleJsonLd from '../components/ArticleJsonLd.astro';
 
@@ -57,6 +58,11 @@ const pageURL = new URL(Astro.url.pathname, Astro.site).href;
     url={pageURL}
   />
   <article class="blog-post">
+    <Breadcrumbs items={[
+      { label: 'Главная', href: '/' },
+      { label: 'Блог', href: '/blog/' },
+      { label: title },
+    ]} />
     {image && (
       <img src={image} alt={imageAlt || ''} width="960" class="hero-image" loading="eager" />
     )}

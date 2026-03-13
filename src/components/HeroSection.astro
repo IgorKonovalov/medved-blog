@@ -1,0 +1,166 @@
+---
+interface Props {
+  title: string;
+  subtitle: string;
+  ctaText: string;
+  ctaHref: string;
+  secondaryCtaText?: string;
+  secondaryCtaHref?: string;
+  backgroundImage: string;
+  backgroundAlt?: string;
+}
+
+const {
+  title,
+  subtitle,
+  ctaText,
+  ctaHref,
+  secondaryCtaText,
+  secondaryCtaHref,
+  backgroundImage,
+  backgroundAlt = '',
+} = Astro.props;
+---
+
+<section class="hero">
+  <img
+    src={backgroundImage}
+    alt={backgroundAlt}
+    class="hero-bg"
+    width="1440"
+    height="810"
+    loading="eager"
+    decoding="async"
+  />
+  <div class="hero-overlay"></div>
+  <div class="hero-inner">
+    <h1>{title}</h1>
+    <p class="hero-subtitle">{subtitle}</p>
+    <div class="hero-actions">
+      <a href={ctaHref} class="hero-cta hero-cta--primary">{ctaText}</a>
+      {secondaryCtaText && secondaryCtaHref && (
+        <a href={secondaryCtaHref} class="hero-cta hero-cta--secondary">{secondaryCtaText}</a>
+      )}
+    </div>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(10, 10, 30, 0.85) 0%,
+      rgba(10, 10, 30, 0.6) 50%,
+      rgba(10, 10, 30, 0.4) 100%
+    );
+    z-index: 1;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-3xl) var(--space-md);
+    width: 100%;
+  }
+
+  .hero h1 {
+    color: #fff;
+    font-size: var(--font-size-4xl);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    max-width: 38rem;
+  }
+
+  @media (min-width: 768px) {
+    .hero h1 {
+      font-size: var(--font-size-5xl);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero h1 {
+      font-size: var(--font-size-6xl);
+    }
+  }
+
+  .hero-subtitle {
+    margin-top: var(--space-lg);
+    font-size: var(--font-size-lg);
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 36rem;
+    line-height: var(--line-height-base);
+  }
+
+  @media (min-width: 768px) {
+    .hero-subtitle {
+      font-size: var(--font-size-xl);
+    }
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 0.875rem 2rem;
+    font-weight: 700;
+    font-size: var(--font-size-base);
+    text-decoration: none;
+    border-radius: var(--radius-lg);
+    transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
+    white-space: nowrap;
+  }
+
+  .hero-cta--primary {
+    background-color: var(--color-primary);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(26, 86, 219, 0.4);
+  }
+
+  .hero-cta--primary:hover {
+    background-color: var(--color-primary-dark);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(26, 86, 219, 0.5);
+  }
+
+  .hero-cta--secondary {
+    background-color: transparent;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+  }
+
+  .hero-cta--secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+    color: #fff;
+  }
+</style>

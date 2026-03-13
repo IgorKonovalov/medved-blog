@@ -2,17 +2,35 @@
 
 ---
 
-<a href="/" class="logo">Медведь</a>
+<a href="/" class="logo" aria-label="BMW автоэлектрик — на главную">
+  <svg class="logo-icon" width="32" height="32" viewBox="0 0 100 100" aria-hidden="true">
+    <circle cx="50" cy="50" r="49" fill="#222" stroke="#888" stroke-width="2"/>
+    <circle cx="50" cy="50" r="40" fill="none" stroke="#ccc" stroke-width="1"/>
+    <path d="M50 10 A40 40 0 0 1 90 50 L50 50 Z" fill="#4ba6e8"/>
+    <path d="M10 50 A40 40 0 0 1 50 10 L50 50 Z" fill="#fff"/>
+    <path d="M50 90 A40 40 0 0 1 10 50 L50 50 Z" fill="#4ba6e8"/>
+    <path d="M90 50 A40 40 0 0 1 50 90 L50 50 Z" fill="#fff"/>
+  </svg>
+  <span class="logo-text">BMW Электрик</span>
+</a>
 
 <style>
   .logo {
-    font-size: var(--font-size-xl);
-    font-weight: 700;
-    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     text-decoration: none;
+    color: var(--color-text);
+    flex-shrink: 0;
   }
 
   .logo:hover {
     color: var(--color-primary);
+  }
+
+  .logo-text {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    letter-spacing: -0.01em;
   }
 </style>

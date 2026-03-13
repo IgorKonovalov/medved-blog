@@ -77,6 +77,24 @@ h3 { font-size: var(--font-size-xl); }
   padding-left: var(--space-lg);
 }
 
+/* Skip to main content link */
+.skip-to-main {
+  position: absolute;
+  top: -100%;
+  left: var(--space-md);
+  z-index: 100;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--radius);
+}
+
+.skip-to-main:focus {
+  top: var(--space-md);
+}
+
 /* Utility: visually hidden but accessible */
 .sr-only {
   position: absolute;

@@ -1,0 +1,158 @@
+---
+const phoneHref = 'tel:+79500373571';
+
+const advantages = [
+  'Дилерское диагностическое оборудование (ISTA, Rheingold)',
+  'Опыт работы с BMW всех серий — от E39 до G80',
+  'Выездная диагностика по Санкт-Петербургу',
+  'Прозрачные цены без скрытых доплат',
+  'Гарантия на выполненные работы',
+];
+---
+
+<section class="why-section">
+  <div class="why-inner">
+    <div class="why-image-wrap">
+      <img
+        src="/images/workshop-engine.jpg"
+        alt="BMW X5 M на диагностике в мастерской"
+        width="640"
+        height="480"
+        loading="lazy"
+        class="why-image"
+      />
+    </div>
+    <div class="why-content">
+      <p class="why-overline">Почему мы</p>
+      <h2>Профессиональный подход к каждому BMW</h2>
+      <ul class="why-list">
+        {advantages.map((item) => (
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+      <div class="why-actions">
+        <a href="/kontakty/" class="why-btn why-btn--primary">Записаться</a>
+        <a href={phoneHref} class="why-btn why-btn--secondary">Позвонить</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .why-section {
+    background-color: var(--color-bg-alt);
+  }
+
+  .why-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-3xl) var(--space-md);
+    display: grid;
+    gap: var(--space-2xl);
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .why-inner {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .why-image-wrap {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .why-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
+  }
+
+  .why-overline {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .why-content h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  @media (min-width: 768px) {
+    .why-content h2 {
+      font-size: var(--font-size-3xl);
+    }
+  }
+
+  .why-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+  }
+
+  .why-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+  }
+
+  .why-list svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .why-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+  }
+
+  .why-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.75rem;
+    font-weight: 700;
+    font-size: var(--font-size-base);
+    text-decoration: none;
+    border-radius: var(--radius-lg);
+    transition: background-color 0.15s, color 0.15s;
+  }
+
+  .why-btn--primary {
+    background-color: var(--color-primary);
+    color: #fff;
+  }
+
+  .why-btn--primary:hover {
+    background-color: var(--color-primary-dark);
+    color: #fff;
+  }
+
+  .why-btn--secondary {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+  }
+
+  .why-btn--secondary:hover {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-dark);
+  }
+</style>

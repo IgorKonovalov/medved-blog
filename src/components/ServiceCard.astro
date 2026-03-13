@@ -11,15 +11,22 @@ const { title, description, slug, image, imageAlt } = Astro.props;
 ---
 
 <article class="service-card">
-  {image ? (
-    <img src={image} alt={imageAlt || ''} width="480" height="270" class="service-card__image" loading="lazy" />
-  ) : (
-    <div class="service-card__placeholder" aria-hidden="true"></div>
-  )}
-  <h3 class="service-card__title">
-    <a href={`/uslugi/${slug}/`}>{title}</a>
-  </h3>
-  <p class="service-card__desc">{description}</p>
+  <div class="service-card__image-wrap">
+    {image ? (
+      <img src={image} alt={imageAlt || ''} width="480" height="270" class="service-card__image" loading="lazy" />
+    ) : (
+      <div class="service-card__placeholder" aria-hidden="true">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      </div>
+    )}
+  </div>
+  <div class="service-card__body">
+    <h3 class="service-card__title">
+      <a href={`/uslugi/${slug}/`}>{title}</a>
+    </h3>
+    <p class="service-card__desc">{description}</p>
+    <span class="service-card__link">Подробнее &rarr;</span>
+  </div>
 </article>
 
 <style>
@@ -29,27 +36,49 @@ const { title, description, slug, image, imageAlt } = Astro.props;
     overflow: hidden;
     background-color: var(--color-bg);
     box-shadow: var(--shadow-sm);
-    transition: box-shadow 0.2s;
+    transition: box-shadow 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
   }
 
   .service-card:hover {
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+  }
+
+  .service-card__image-wrap {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background-color: var(--color-bg-alt);
   }
 
   .service-card__image {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     display: block;
   }
 
   .service-card__placeholder {
-    height: 10rem;
-    background-color: var(--color-bg-alt);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-bg-alt) 0%, var(--color-border) 100%);
+    color: var(--color-text-muted);
+  }
+
+  .service-card__body {
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
   .service-card__title {
-    padding: var(--space-md) var(--space-md) 0;
     font-size: var(--font-size-lg);
+    font-weight: 700;
   }
 
   .service-card__title a {
@@ -62,8 +91,16 @@ const { title, description, slug, image, imageAlt } = Astro.props;
   }
 
   .service-card__desc {
-    padding: var(--space-sm) var(--space-md) var(--space-md);
+    margin-top: var(--space-sm);
     font-size: var(--font-size-sm);
     color: var(--color-text-muted);
+    flex: 1;
+  }
+
+  .service-card__link {
+    margin-top: var(--space-md);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-primary);
   }
 </style>
