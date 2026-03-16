@@ -1,5 +1,5 @@
 ---
 title: Кодирование и программирование любых блоков управления BMW
-image: /images/BMW-5-G30-G31-2017-Sterownik-Modul-ECU.jpg
+image: /images/photo_2026-03-16_15-19-33.jpg
 ---
 
