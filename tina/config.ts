@@ -55,6 +55,12 @@ export default defineConfig({
             },
           },
         },
+        defaultItem: () => ({
+          date: new Date().toISOString(),
+          description: '',
+          tags: [],
+          draft: false,
+        }),
         fields: [
           {
             type: 'string',

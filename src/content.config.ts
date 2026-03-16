@@ -5,7 +5,7 @@ const services = defineCollection({
   loader: glob({ pattern: '*.md', base: 'src/content/services' }),
   schema: z.object({
     title: z.string(),
-    description: z.string().max(160),
+    description: z.string().max(160).default(''),
     order: z.number().default(0),
     image: z.string().optional(),
     imageAlt: z.string().optional(),
@@ -19,7 +19,7 @@ const blog = defineCollection({
     title: z.string(),
     date: z.date(),
     updated: z.date().optional(),
-    description: z.string().max(160),
+    description: z.string().max(160).default(''),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
     image: z.string().optional(),
