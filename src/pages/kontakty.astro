@@ -3,11 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const phone = '+7 950 037-35-71';
 const phoneHref = 'tel:+79500373571';
-const whatsappHref = 'https://wa.me/79500373571';
 const telegramHref = 'https://t.me/bmw_remont';
 ---
 
-<BaseLayout title="Контакты — автоэлектрик BMW" description="Свяжитесь с автоэлектриком BMW в Санкт-Петербурге. Телефон, WhatsApp, Telegram. Адрес мастерской.">
+<BaseLayout title="Контакты — автоэлектрик BMW" description="Свяжитесь с автоэлектриком BMW в Санкт-Петербурге. Телефон, Telegram. Адрес мастерской.">
   <section class="contact-page">
     <h1>Контакты</h1>
 
@@ -18,7 +17,6 @@ const telegramHref = 'https://t.me/bmw_remont';
 
         <h2>Мессенджеры</h2>
         <div class="messenger-links">
-          <a href={whatsappHref} target="_blank" rel="noopener noreferrer" class="messenger-link messenger-link--wa">WhatsApp</a>
           <a href={telegramHref} target="_blank" rel="noopener noreferrer" class="messenger-link messenger-link--tg">Telegram</a>
         </div>
 
@@ -91,15 +89,6 @@ const telegramHref = 'https://t.me/bmw_remont';
     font-weight: 600;
     text-decoration: none;
     font-size: var(--font-size-sm);
-  }
-
-  .messenger-link--wa {
-    background-color: #25d366;
-  }
-
-  .messenger-link--wa:hover {
-    background-color: #1fb855;
-    color: #fff;
   }
 
   .messenger-link--tg {
