@@ -1,9 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const phone = '+7 950 037-35-71';
-const phoneHref = 'tel:+79500373571';
-const telegramHref = 'https://t.me/bmw_remont';
+import YandexMap from '../components/YandexMap.astro';
+import { contacts } from '../data/contacts';
 ---
 
 <BaseLayout title="Контакты — автоэлектрик BMW" description="Свяжитесь с автоэлектриком BMW в Санкт-Петербурге. Телефон, Telegram. Адрес мастерской.">
@@ -13,11 +11,11 @@ const telegramHref = 'https://t.me/bmw_remont';
     <div class="contact-grid">
       <div class="contact-info">
         <h2>Телефон</h2>
-        <a href={phoneHref} class="contact-phone">{phone}</a>
+        <a href={contacts.phoneHref} class="contact-phone">{contacts.phone}</a>
 
         <h2>Мессенджеры</h2>
         <div class="messenger-links">
-          <a href={telegramHref} target="_blank" rel="noopener noreferrer" class="messenger-link messenger-link--tg">Telegram</a>
+          <a href={contacts.telegram} target="_blank" rel="noopener noreferrer" class="messenger-link messenger-link--tg">Telegram</a>
         </div>
 
         <h2>Адрес</h2>
@@ -31,9 +29,7 @@ const telegramHref = 'https://t.me/bmw_remont';
         <p>Вс: выходной</p>
       </div>
 
-      <div class="map-placeholder" aria-hidden="true">
-        <span>Карта</span>
-      </div>
+      <YandexMap lat={contacts.coordinates.lat} lng={contacts.coordinates.lng} />
     </div>
   </section>
 </BaseLayout>
@@ -111,14 +107,4 @@ const telegramHref = 'https://t.me/bmw_remont';
     margin-top: var(--space-sm);
   }
 
-  .map-placeholder {
-    min-height: 16rem;
-    background-color: var(--color-bg-alt);
-    border-radius: var(--radius-lg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
-  }
 </style>

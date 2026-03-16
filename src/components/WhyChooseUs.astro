@@ -1,5 +1,5 @@
 ---
-const phoneHref = 'tel:+79500373571';
+import { contacts } from '../data/contacts';
 
 const advantages = [
   'Дилерское диагностическое оборудование (ISTA, Rheingold)',
@@ -14,10 +14,10 @@ const advantages = [
   <div class="why-inner">
     <div class="why-image-wrap">
       <img
-        src="/images/workshop-engine.jpg"
+        src="/images/workshop/x5m-engine-bay.webp"
         alt="BMW X5 M на диагностике в мастерской"
-        width="640"
-        height="480"
+        width="1200"
+        height="900"
         loading="lazy"
         class="why-image"
       />
@@ -35,7 +35,7 @@ const advantages = [
       </ul>
       <div class="why-actions">
         <a href="/kontakty/" class="why-btn why-btn--primary">Записаться</a>
-        <a href={phoneHref} class="why-btn why-btn--secondary">Позвонить</a>
+        <a href={contacts.phoneHref} class="why-btn why-btn--secondary">Позвонить</a>
       </div>
     </div>
   </div>

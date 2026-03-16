@@ -1,0 +1,120 @@
+---
+const faqItems = [
+  {
+    question: 'Какие серии BMW вы обслуживаете?',
+    answer: 'Работаем со всеми сериями BMW — от классических E-кузовов (E36, E39, E46, E60, E90) до современных F и G поколений (F10, F30, G20, G30 и др.), включая X-серию и M-модели. Опыт работы с автомобилями BMW более 15 лет.',
+  },
+  {
+    question: 'Сколько стоит диагностика электрики BMW?',
+    answer: 'Стоимость зависит от сложности проблемы и модели автомобиля. Мы не называем фиксированную цену заочно, потому что честная диагностика требует осмотра — одна и та же «ошибка» может иметь совершенно разные причины. Позвоните или напишите, опишите симптомы — дадим предварительную оценку бесплатно.',
+  },
+  {
+    question: 'Вы выезжаете для диагностики на место?',
+    answer: 'Да, выполняем выездную диагностику по всему Санкт-Петербургу. Берём с собой дилерское оборудование (ISTA) и измерительные приборы. Это удобно, если автомобиль не заводится или вы не хотите ехать в сервис до выяснения причины.',
+  },
+  {
+    question: 'Какое оборудование вы используете?',
+    answer: 'Работаем на дилерском диагностическом софте BMW ISTA — том же, что используют официальные дилеры. Помимо этого применяем профессиональный осциллограф и мультиметр для углублённой диагностики электрических цепей и датчиков.',
+  },
+  {
+    question: 'Сколько времени занимает диагностика?',
+    answer: 'Базовая компьютерная диагностика (считывание ошибок, проверка систем) — от 30 минут. Если нужна углублённая диагностика с проверкой проводки, датчиков и осциллографом — от 1 до 3 часов в зависимости от сложности проблемы.',
+  },
+  {
+    question: 'Как записаться на диагностику или ремонт?',
+    answer: 'Самый быстрый способ — написать в Telegram. Также можно позвонить по телефону +7 950 037-35-71. Опишите проблему и модель автомобиля — подберём удобное время. Работаем с понедельника по субботу, с 10:00 до 20:00.',
+  },
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+};
+---
+
+<section class="faq-section">
+  <div class="faq-inner">
+    <h2>Часто задаваемые вопросы</h2>
+    <div class="faq-list">
+      {faqItems.map((item) => (
+        <details class="faq-item">
+          <summary class="faq-question">{item.question}</summary>
+          <p class="faq-answer">{item.answer}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
+<style>
+  .faq-section {
+    background-color: var(--color-bg);
+  }
+
+  .faq-inner {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--space-3xl) var(--space-md);
+  }
+
+  .faq-inner h2 {
+    margin-bottom: var(--space-xl);
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: var(--space-lg) 0;
+    font-weight: 600;
+    font-size: var(--font-size-base);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-question::after {
+    content: '';
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: transform 0.2s;
+  }
+
+  .faq-item[open] .faq-question::after {
+    transform: rotate(180deg);
+  }
+
+  .faq-answer {
+    padding-bottom: var(--space-lg);
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    font-size: var(--font-size-base);
+  }
+</style>

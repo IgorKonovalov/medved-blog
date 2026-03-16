@@ -1,51 +1,285 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { contacts } from '../data/contacts';
 ---
 
 <BaseLayout title="О нас — автоэлектрик BMW" description="Опытный автоэлектрик BMW в Санкт-Петербурге. Специализация на электрооборудовании BMW всех серий.">
-  <section class="about-page">
-    <h1>О нас</h1>
-
-    <div class="prose">
+  <section class="about-hero">
+    <div class="about-hero-inner">
+      <h1>О нас</h1>
       <p>Мы специализируемся на диагностике и ремонте электрооборудования автомобилей BMW всех серий. Работаем в Санкт-Петербурге и обслуживаем клиентов из всех районов города.</p>
+    </div>
+  </section>
 
+  <section class="about-gallery">
+    <div class="about-gallery-inner">
+      <h2>Наша мастерская</h2>
+      <div class="gallery-grid">
+        <img src="/images/workshop/v12-diagnostics-ista.webp" alt="Диагностика BMW V12 с помощью ISTA" width="1200" height="900" loading="lazy" />
+        <img src="/images/workshop/engine-oscilloscope.webp" alt="Диагностика двигателя BMW осциллографом" width="1200" height="900" loading="lazy" />
+        <img src="/images/workshop/x5m-engine-bay.webp" alt="BMW X5 M — диагностика моторного отсека" width="1200" height="900" loading="lazy" />
+        <img src="/images/workshop/g20-diagnostics.webp" alt="Компьютерная диагностика BMW G20" width="1200" height="900" loading="lazy" />
+        <img src="/images/workshop/x5m-interior.webp" alt="Салон BMW X5 M в мастерской" width="1200" height="900" loading="lazy" />
+        <img src="/images/workshop/g20-workshop-exterior.webp" alt="BMW G20 в мастерской — вид снаружи" width="960" height="1280" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <section class="about-equipment">
+    <div class="about-equipment-inner">
+      <h2>Оборудование</h2>
+      <p>Используем профессиональное оборудование для точной диагностики и ремонта электрики BMW:</p>
+      <ul class="equipment-list">
+        <li>
+          <strong>BMW ISTA</strong> — дилерское диагностическое ПО, такое же, как у официальных дилеров
+        </li>
+        <li>
+          <strong>Профессиональный осциллограф</strong> — для углублённой диагностики электрических цепей и сигналов датчиков
+        </li>
+        <li>
+          <strong>Мультиметр</strong> — для измерения напряжения, сопротивления и тока в электрических цепях
+        </li>
+        <li>
+          <strong>Кабели и адаптеры BMW</strong> — полный комплект для подключения к любым сериям BMW
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="about-experience">
+    <div class="about-experience-inner">
       <h2>Опыт и специализация</h2>
-      <p>Многолетний опыт работы с электрикой BMW позволяет нам быстро находить и устранять даже самые сложные неисправности. Используем дилерское диагностическое оборудование.</p>
-
-      <h2>Сертификаты</h2>
-      <ul>
-        <li>Диагностика электрооборудования BMW</li>
-        <li>Кодирование и программирование блоков BMW</li>
-        <li>Ремонт электропроводки</li>
+      <p>Более 15 лет работы с электрикой BMW. Обслуживаем все серии:</p>
+      <ul class="series-list">
+        <li>Классические E-кузова: E36, E39, E46, E60, E90</li>
+        <li>Современные F-серии: F10, F30, F80</li>
+        <li>Актуальные G-серии: G20, G30, G80</li>
+        <li>X-серия: X1, X3, X5, X5 M, X6</li>
+        <li>M-модели: M3, M5, X5 M и другие</li>
       </ul>
 
-      <div class="photo-placeholder" aria-hidden="true">
-        <span>Фото мастерской</span>
+      <div class="master-placeholder">
+        <span>Фото мастера</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-cta">
+    <div class="about-cta-inner">
+      <h2>Записаться на диагностику</h2>
+      <p>Позвоните или напишите — проконсультируем бесплатно и запишем на удобное время.</p>
+      <div class="about-cta-links">
+        <a href={contacts.phoneHref} class="about-cta-btn about-cta-btn--phone">
+          {contacts.phone}
+        </a>
+        <a href={contacts.telegram} target="_blank" rel="noopener noreferrer" class="about-cta-btn about-cta-btn--tg">
+          Telegram
+        </a>
       </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .about-page {
+  .about-hero {
+    background-color: var(--color-bg);
+  }
+
+  .about-hero-inner {
     max-width: var(--content-width);
     margin: 0 auto;
     padding: var(--space-2xl) var(--space-md);
   }
 
-  .about-page h1 {
+  .about-hero-inner h1 {
+    margin-bottom: var(--space-md);
+  }
+
+  .about-hero-inner p {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  .about-gallery {
+    background-color: var(--color-bg-alt);
+  }
+
+  .about-gallery-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-3xl) var(--space-md);
+  }
+
+  .about-gallery-inner h2 {
     margin-bottom: var(--space-xl);
   }
 
-  .photo-placeholder {
-    margin-top: var(--space-xl);
-    height: 16rem;
+  .gallery-grid {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  @media (min-width: 640px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .gallery-grid img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-lg);
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
+  }
+
+  .about-equipment {
+    background-color: var(--color-bg);
+  }
+
+  .about-equipment-inner {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--space-3xl) var(--space-md);
+  }
+
+  .about-equipment-inner h2 {
+    margin-bottom: var(--space-md);
+  }
+
+  .about-equipment-inner > p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+  }
+
+  .equipment-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    list-style: none;
+  }
+
+  .equipment-list li {
+    padding: var(--space-md);
     background-color: var(--color-bg-alt);
+    border-radius: var(--radius);
+    line-height: 1.6;
+  }
+
+  .about-experience {
+    background-color: var(--color-bg-alt);
+  }
+
+  .about-experience-inner {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--space-3xl) var(--space-md);
+  }
+
+  .about-experience-inner h2 {
+    margin-bottom: var(--space-md);
+  }
+
+  .about-experience-inner > p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+  }
+
+  .series-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding-left: var(--space-lg);
+  }
+
+  .series-list li {
+    line-height: 1.6;
+  }
+
+  .master-placeholder {
+    margin-top: var(--space-2xl);
+    height: 16rem;
+    background-color: var(--color-bg);
     border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--color-text-muted);
     font-size: var(--font-size-sm);
+    border: 2px dashed var(--color-border);
+  }
+
+  .about-cta {
+    background-color: var(--color-surface-dark);
+    color: var(--color-surface-dark-text);
+    text-align: center;
+  }
+
+  .about-cta-inner {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: var(--space-3xl) var(--space-md);
+  }
+
+  .about-cta-inner h2 {
+    color: #fff;
+    font-size: var(--font-size-2xl);
+    font-weight: 800;
+  }
+
+  .about-cta-inner p {
+    color: var(--color-surface-dark-muted);
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-xl);
+    font-size: var(--font-size-lg);
+  }
+
+  .about-cta-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-md);
+  }
+
+  .about-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 0.75rem 1.75rem;
+    font-weight: 700;
+    font-size: var(--font-size-base);
+    text-decoration: none;
+    border-radius: var(--radius-lg);
+    transition: background-color 0.15s, color 0.15s;
+  }
+
+  .about-cta-btn--phone {
+    background-color: transparent;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+  }
+
+  .about-cta-btn--phone:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+    color: #fff;
+  }
+
+  .about-cta-btn--tg {
+    background-color: #0088cc;
+    color: #fff;
+  }
+
+  .about-cta-btn--tg:hover {
+    background-color: #006da3;
+    color: #fff;
   }
 </style>
